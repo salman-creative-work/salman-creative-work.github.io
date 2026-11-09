@@ -1,23 +1,6 @@
-/* Editorial Arabic: classical Naskh headlines with a contemporary reading face.
-   Self-hosted Noto fonts are distributed under the accompanying SIL OFL files. */
 @font-face{font-family:'Noto Naskh Arabic';src:url('assets/NotoNaskhArabic.ttf') format('truetype');font-style:normal;font-weight:400 700;font-display:swap}
 @font-face{font-family:'Noto Sans Arabic';src:url('assets/NotoSansArabic.ttf') format('truetype');font-style:normal;font-weight:100 900;font-display:swap}
-html[lang=ar] body{font-family:'Noto Sans Arabic',Tahoma,Arial,sans-serif;font-weight:400}
-html[lang=ar] h1,html[lang=ar] h2,html[lang=ar] h3,html[lang=ar] .brand>span:last-child,html[lang=ar] .story-tabs b,html[lang=ar] .share-strip strong{font-family:'Noto Naskh Arabic',Tahoma,serif;font-weight:700;letter-spacing:0;font-synthesis:none}
-html[lang=ar] .hero h1{font-size:clamp(49px,5.4vw,83px);line-height:1.37;letter-spacing:0;margin-block:19px 21px}
-html[lang=ar] .hero h1 em{padding-block:.05em}
-html[lang=ar] .section h2{line-height:1.48;letter-spacing:0}
-html[lang=ar] .brand{font-size:20px}
-html[lang=ar] .navlinks a{font-size:13px}
-html[lang=ar] .lead{font-size:18px;line-height:2}
-html[lang=ar] .section-top>p,html[lang=ar] .contact>p{font-size:18px;line-height:2}
-html[lang=ar] .disciplines p,html[lang=ar] .story-content>p{font-size:16px;line-height:2}
-html[lang=ar] .work p,html[lang=ar] .timeline p{font-size:15px;line-height:2}
-html[lang=ar] .work h3{font-size:28px;line-height:1.5}
-html[lang=ar] .timeline h3{font-size:27px;line-height:1.5}
-html[lang=ar] .story-content h3{font-size:39px;line-height:1.5}
-html[lang=ar] .story-tabs b{font-size:25px;line-height:1.4}
-html[lang=ar] .button,html[lang=ar] .filters button{font-size:14px;line-height:1.8}
-html[lang=ar] .eyebrow,html[lang=ar] .tag,html[lang=ar] .story-content>span,html[lang=ar] .visual-caption{letter-spacing:0;line-height:1.85}
-@media(max-width:850px){html[lang=ar] .hero h1{font-size:49px}html[lang=ar] .story-content h3{font-size:32px}}
-@media(max-width:620px){html[lang=ar] .hero h1{font-size:clamp(42px,11.6vw,52px);line-height:1.42}html[lang=ar] .lead{font-size:16px}html[lang=ar] .section h2{font-size:38px}html[lang=ar] .contact h2{font-size:57px}html[lang=ar] .story-tabs b{font-size:20px}html[lang=ar] .story-content h3{font-size:31px}html[lang=ar] .brand{font-size:17px}html[lang=ar] .showcase-heading>p{font-size:16px}html[lang=ar] .section-top>p,html[lang=ar] .contact>p{font-size:16px}}
+html[lang=ar] body{font-family:'Noto Sans Arabic',Tahoma,Arial,sans-serif}html[lang=ar] h1,html[lang=ar] h2,html[lang=ar] h3{font-family:'Noto Naskh Arabic',Tahoma,serif;letter-spacing:0;font-weight:700;font-synthesis:none}
+html[lang=ar] .hero h1{font-size:clamp(52px,6.1vw,94px);line-height:1.34;margin-block:15px 22px}html[lang=ar] .hero h1 em{padding-block:.02em}html[lang=ar] .lead{font-size:17px;line-height:2.05}html[lang=ar] h2{line-height:1.35}html[lang=ar] .section-heading>p{font-size:15px;line-height:2}html[lang=ar] .navlinks{font-size:12px}html[lang=ar] .eyebrow,html[lang=ar] .tag,html[lang=ar] .hero-bottom>span:last-child{letter-spacing:0}html[lang=ar] .cinema-card h3{font-size:27px;line-height:1.5}html[lang=ar] .cinema-card>p{font-size:13px;line-height:1.95}html[lang=ar] .button{font-size:13px}html[lang=ar] .text-link{font-size:12px}html[lang=ar] .hero-film small{letter-spacing:0}html[lang=ar] .service-selector button{font-size:15px;line-height:1.8}html[lang=ar] .service-panel h3{font-size:40px;line-height:1.5}html[lang=ar] .service-panel p:not(.eyebrow){font-size:14px;line-height:2}html[lang=ar] .service-panel li{font-size:13px;line-height:1.9}html[lang=ar] .craft-grid h3{font-size:27px}html[lang=ar] .craft-grid p{font-size:13px;line-height:2}html[lang=ar] .about-copy .about-lead{font-size:18px;line-height:2}html[lang=ar] .about-copy>p:not(.eyebrow){font-size:14px;line-height:2}html[lang=ar] .voice-card h3,html[lang=ar] .story-card h3{font-size:25px;line-height:1.4}html[lang=ar] .voice-card p,html[lang=ar] .story-card p{font-size:12px;line-height:2}html[lang=ar] .contact>p:not(.eyebrow){font-size:16px;line-height:2}html[lang=ar] .dialog-copy h2{font-size:38px;line-height:1.4}html[lang=ar] .case-point h3{font-size:22px}html[lang=ar] .case-point p{font-size:12px;line-height:2}
+@media(max-width:1000px){html[lang=ar] .hero h1{font-size:64px}html[lang=ar] .hero .lead{font-size:15px}html[lang=ar] .cinema-card h3{font-size:24px}html[lang=ar] .cinema-card>p{font-size:12px}}
+@media(max-width:700px){html[lang=ar] .hero h1{font-size:clamp(48px,12.3vw,72px);line-height:1.36}html[lang=ar] .hero .lead{font-size:14px;line-height:2}html[lang=ar] h2{font-size:44px;line-height:1.4}html[lang=ar] .section-heading>p{font-size:14px}html[lang=ar] .cinema-card h3{font-size:23px;line-height:1.4}html[lang=ar] .cinema-card>p{font-size:10px;line-height:2}html[lang=ar] .cinema-card:first-child>p{font-size:13px}html[lang=ar] .service-selector button{font-size:12px}html[lang=ar] .service-panel h3{font-size:32px}html[lang=ar] .craft-grid h3{font-size:25px}html[lang=ar] .craft-grid p{font-size:11px}html[lang=ar] .voice-card h3{font-size:26px}html[lang=ar] .story-card h3{font-size:21px}html[lang=ar] .story-card p{font-size:10px}html[lang=ar] .contact h2{font-size:53px}html[lang=ar] .contact>p:not(.eyebrow){font-size:14px}html[lang=ar] .dialog-copy h2{font-size:33px}}
