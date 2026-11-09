@@ -3,10 +3,15 @@
   const $=id=>document.getElementById(id);
   const params=new URLSearchParams(location.search);
   let lang=params.get('lang')==='en'?'en':'ar', route=['business','channel','anime'].includes(params.get('route'))?params.get('route'):'business';
-  let selected={business:'stores',channel:'complete',anime:'pilot'}, specific=null, activeWork=null, lastTrigger=null;
+  let selected={business:'stores',channel:'complete',anime:'pilot'}, specific=null, activeWork=null, lastTrigger=null, workFilter='featured', skipFilmReturnFocus=false;
   const pick=v=>v[lang==='ar'?0:1], tx=(ar,en)=>lang==='ar'?ar:en;
   const data=window.PORTFOLIO_DATA;
-  const works=[...(data?.cinema||[]),...(data?.stories||[])];
+  const collections={cinema:data?.cinema||[],stories:data?.stories||[],voice:data?.voice||[],aiAudio:data?.aiAudio||[]};
+  const works=[...collections.cinema,...collections.stories,...collections.voice,...collections.aiAudio];
+  const worksById=new Map(works.map(w=>[w.id,w]));
+  const featuredIds=['gamestore','ayat-magic','recurring-numbers','haydarah','alice','sylvester-zark'];
+  const humanVoiceIds=['joker','evangelion','smurfs','metal-gear'];
+  const aiAudioIds=['palace-narration','haydarah-song','moses-voice'];
   const field=(w,k)=>w[k+(lang==='ar'?'Ar':'En')]||'';
   const scopeNote=['نحدد المدة والمخرجات والمراجعات والسعر في عرض واضح قبل البدء. التصوير والتراخيص الخاصة تُقدّر عند الحاجة.','Duration, deliverables, reviews and price are agreed in a clear proposal. Filming and special licences are quoted when needed.'];
   const choices={
@@ -34,18 +39,112 @@
   function updateLinks(){document.querySelectorAll('[data-local-link]').forEach(a=>{const u=new URL(a.getAttribute('href'),location.href);if(lang==='en')u.searchParams.set('lang','en');else u.searchParams.delete('lang');a.href=u.pathname+u.search+u.hash;});}
   function renderSelection(){const row=current();$('brief-selection').textContent=specific?tx('الخدمة المختارة: ','Selected service: ')+pick(specific):tx('المسار المختار: ','Selected path: ')+pick(choices[route].title)+' · '+pick(row.name);}
   function renderService(){const section=choices[route],row=current();document.querySelectorAll('[data-route]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.route===route)));$('choice-label').textContent=pick(section.label);const selector=$('service-choice');selector.replaceChildren(...section.items.map(i=>{const o=new Option(pick(i.name),i.id);o.selected=i.id===row.id;return o;}));$('service-title').textContent=pick(row.title);$('service-description').textContent=pick(row.description);$('service-example').textContent=pick(row.exampleText);$('scope-label').textContent=tx('ما الذي يمكن أن يشمله مشروعك؟','What can your project include?');$('service-deliverables').replaceChildren(...row.output.map(t=>safeEl('li','',pick(t))));$('service-note').textContent=pick(scopeNote);$('route-cta').textContent=tx('لنتحدث عن هذا المشروع','Let’s discuss this project');renderSelection();}
-  function renderWorks(){const ids=['gamestore','ayat-magic','recurring-numbers'];$('selected-work').replaceChildren(...ids.map(id=>{const w=works.find(w=>w.id===id);const article=safeEl('article','work-card'),button=safeEl('button'),img=safeEl('img');button.type='button';button.setAttribute('aria-label',tx('شاهد ','Watch ')+w[lang]);img.src=w.image;img.alt=w[lang];img.loading='lazy';const play=safeEl('span','play-dot','▶');play.setAttribute('aria-hidden','true');button.append(img,play);button.addEventListener('click',()=>openWork(id,button));const copy=safeEl('div');copy.append(safeEl('h3','',w[lang]),safeEl('p','',field(w,'summary')||field(w,'description')),safeEl('p','work-role',field(w,'role')));article.append(button,copy);return article;}));}
-  function renderLanguage(){document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.title=tx('سلمان الحسيني × ORAKTION | أفكار وأفلام وعوالم إبداعية','Salman Al Husseini × ORAKTION | Creative direction & storytelling');document.querySelectorAll('[data-ar][data-en]').forEach(e=>e.innerHTML=e.dataset[lang]);$('language').textContent=lang==='ar'?'EN':'ع';$('language').setAttribute('aria-label',tx('Switch to English','التبديل إلى العربية'));renderService();renderWorks();updateLinks();if(activeWork)renderFilm();}
+  function youtubeId(w){return typeof w.youtubeId==='string'&&/^[a-zA-Z0-9_-]{11}$/.test(w.youtubeId)?w.youtubeId:'';}
+  function playable(w){return Boolean(w.video||w.audio||youtubeId(w));}
+  function sourceUrl(w){return w.url||'work.html'+(lang==='en'?'?lang=en':'')+'#work';}
+  function categoryLabel(w,collection){
+    if(collection==='voice'){
+      const categories={cartoon:['كرتون','Cartoon'],anime:['أنمي','Anime'],games:['ألعاب','Games'],human:['شخصيات بشرية','Live-action characters']};
+      const category=categories[w.performanceCategory];
+      return tx('أداء صوتي بشري','Human voice performance')+(category?' · '+pick(category):'');
+    }
+    if(collection==='aiAudio')return w.briefPreset?.musicType==='vocal'?tx('غناء AI · الكلمات: سلمان','AI singing · Lyrics: Salman'):tx('صوت مُنتَج بالـAI','AI-produced voice');
+    return field(w,'kind')||tx('حكايات وعوالم أوراكشن','ORAKTION stories & worlds');
+  }
+  function workCard(w,collection){
+    const sample=collection==='voice'||collection==='aiAudio';
+    const article=safeEl('article','work-card'+(sample?' sample-card '+(collection==='voice'?'human-voice-card':'ai-audio-card'):''));
+    article.dataset.workCard=w.id;
+    const button=safeEl('button'),img=safeEl('img');
+    button.type='button';button.dataset.work=w.id;
+    button.setAttribute('aria-label',playable(w)?tx('شاهد ','Watch ')+w[lang]:tx('تفاصيل العمل ومصدره: ','Work details and source: ')+w[lang]);
+    img.src=w.image;img.alt=w[lang];img.loading='lazy';
+    const play=safeEl('span','play-dot',playable(w)?'▶':'↗');play.setAttribute('aria-hidden','true');
+    const label=safeEl('span','work-media-label',playable(w)?tx('شاهد العمل','Watch the work'):tx('شاهد في المصدر','Watch at source'));
+    button.append(img,play,label);button.addEventListener('click',()=>openWork(w.id,button));
+    const copy=safeEl('div','work-copy');
+    copy.append(safeEl('p','work-category',categoryLabel(w,collection)),safeEl('h3','',w[lang]));
+    const summary=field(w,'summary')||field(w,'description');
+    if(summary)copy.append(safeEl('p','work-summary',summary));
+    const role=field(w,'role')||field(w,'note');
+    if(role)copy.append(safeEl('p','work-role',role));
+    article.append(button,copy);return article;
+  }
+  function uniqueWorks(rows){const seen=new Set();return rows.filter(w=>{if(!w||seen.has(w.id))return false;seen.add(w.id);return true;});}
+  function renderWorks(){
+    const rows=workFilter==='ads'?collections.cinema.filter(w=>w.type==='ad'):workFilter==='stories'?[...collections.stories,...collections.cinema.filter(w=>w.type!=='ad')]:featuredIds.map(id=>worksById.get(id));
+    $('selected-work')?.replaceChildren(...uniqueWorks(rows).map(w=>workCard(w,'work')));
+    document.querySelectorAll('[data-work-filter]').forEach(button=>{const active=button.dataset.workFilter===workFilter;button.setAttribute('aria-pressed',String(active));button.classList.toggle('active',active);});
+  }
+  function renderSamples(){
+    [['human-voice-grid',humanVoiceIds,'voice'],['ai-audio-grid',aiAudioIds,'aiAudio']].forEach(([id,ids,collection])=>{
+      $(id)?.replaceChildren(...ids.map(key=>worksById.get(key)).filter(Boolean).map(w=>workCard(w,collection)));
+    });
+  }
+  function renderLanguage(){document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.title=tx('سلمان الحسيني × ORAKTION | أفكار وأفلام وعوالم إبداعية','Salman Al Husseini × ORAKTION | Creative direction & storytelling');document.querySelectorAll('[data-ar][data-en]').forEach(e=>e.innerHTML=e.dataset[lang]);$('language').textContent=lang==='ar'?'EN':'ع';$('language').setAttribute('aria-label',tx('Switch to English','التبديل إلى العربية'));renderService();renderWorks();renderSamples();updateLinks();if(activeWork)renderFilm();}
   function persist(){const u=new URL(location.href);if(lang==='en')u.searchParams.set('lang','en');else u.searchParams.delete('lang');u.searchParams.set('route',route);history.replaceState(null,'',u.pathname+u.search+u.hash);}
-  function renderFilm(){const w=works.find(w=>w.id===activeWork);if(!w)return;$('film-title').textContent=w[lang];$('film-description').textContent=field(w,'idea')||field(w,'summary')||field(w,'description');$('film-role').textContent=field(w,'role');$('film-credit').textContent=[field(w,'note'),field(w,'credit'),(data.stories||[]).some(item=>item.id===w.id)?field(w,'detail'):''].filter(Boolean).join(' · ');if(w.id==='qamar')$('film-credit').textContent=tx('فكرة مستقلة لعيادة خيالية، وليست حملة لعميل حقيقي.','An independent concept for a fictional clinic, not a campaign for a real client.');const media=$('film-media');media.querySelectorAll('video').forEach(v=>v.pause());media.replaceChildren();if(w.video){const v=safeEl('video');v.src=w.video;v.poster=w.image;v.controls=true;v.playsInline=true;v.preload='metadata';v.setAttribute('aria-label',w[lang]);media.append(v);}else{const img=safeEl('img');img.src=w.image;img.alt=w[lang];img.style.cssText='width:100%;max-height:55vh;object-fit:contain';media.append(img);}const source=$('film-source');source.href=w.url||'work.html#work';source.textContent=w.video?tx('العمل واعتماداته في المصدر ↗','Original work & credits ↗'):tx('شاهد العمل كاملًا في المصدر ↗','Watch the complete work at its source ↗');}
-  function openWork(id,trigger){if(!works.some(w=>w.id===id))return;activeWork=id;lastTrigger=trigger||document.activeElement;renderFilm();$('film-dialog').showModal();document.body.style.overflow='hidden';}
-  function clearFilm(){ $('film-media').querySelectorAll('video').forEach(v=>{v.pause();v.removeAttribute('src');v.load();});$('film-media').replaceChildren();activeWork=null;document.body.style.overflow='';lastTrigger?.focus({preventScroll:true});}
+  function clearFilmMedia(){
+    const media=$('film-media');
+    media.querySelectorAll('video,audio').forEach(v=>{v.pause();v.removeAttribute('src');v.load();});
+    media.replaceChildren();
+  }
+  function renderFilmInsights(w){
+    const insights=$('film-insights');if(!insights)return;
+    const rows=[
+      [tx('الفكرة','The idea'),field(w,'idea')],
+      [tx('التفاصيل والاعتمادات','Details & credits'),field(w,'detail')],
+      [tx('ما يضيفه الأسلوب','What the approach adds'),field(w,'impact')],
+      [tx('كيف يناسب مشروعك','How it can fit your project'),field(w,'apply')||field(w,'use')]
+    ].filter(([,body])=>body);
+    insights.replaceChildren(...rows.map(([title,body])=>{const section=safeEl('section','film-insight');section.append(safeEl('h3','',title),safeEl('p','',body));return section;}));
+    insights.hidden=rows.length===0;
+  }
+  function renderFilm(){
+    const w=worksById.get(activeWork);if(!w)return;
+    $('film-title').textContent=w[lang];
+    $('film-description').textContent=field(w,'summary')||field(w,'description')||field(w,'idea');
+    const role=field(w,'role');$('film-role').textContent=role;$('film-role').hidden=!role;
+    const credits=[field(w,'note'),field(w,'credit')];
+    if(!$('film-insights'))credits.push(field(w,'detail'));
+    if(w.id==='qamar'&&!field(w,'note'))credits.push(tx('فكرة مستقلة لعيادة خيالية، وليست حملة لعميل حقيقي.','An independent concept for a fictional clinic, not a campaign for a real client.'));
+    $('film-credit').textContent=[...new Set(credits.filter(Boolean))].join(' · ');$('film-credit').hidden=!$('film-credit').textContent;
+    renderFilmInsights(w);clearFilmMedia();
+    const media=$('film-media');
+    if(w.video||w.audio){
+      const player=safeEl(w.audio?'audio':'video');player.src=w.audio||w.video;
+      if(!w.audio){player.poster=w.image;player.playsInline=true;}
+      player.controls=true;player.preload='metadata';player.setAttribute('aria-label',w[lang]);media.append(player);
+    }else if(youtubeId(w)){
+      const launch=safeEl('button','youtube-launch'),img=safeEl('img');launch.type='button';launch.setAttribute('aria-label',tx('تشغيل من YouTube: ','Play from YouTube: ')+w[lang]);
+      img.src=w.image;img.alt=w[lang];img.loading='lazy';
+      const play=safeEl('span','play-dot','▶');play.setAttribute('aria-hidden','true');
+      launch.append(img,play,safeEl('span','youtube-label',tx('تشغيل من YouTube','Play from YouTube')));
+      launch.addEventListener('click',()=>{
+        const frame=safeEl('iframe');frame.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(youtubeId(w))+'?autoplay=1';
+        frame.title=w[lang];frame.loading='lazy';frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';frame.allowFullscreen=true;frame.referrerPolicy='strict-origin-when-cross-origin';media.replaceChildren(frame);
+      });
+      media.append(launch);
+    }else{
+      if(w.image){const img=safeEl('img');img.src=w.image;img.alt=w[lang];img.style.cssText='width:100%;max-height:55vh;object-fit:contain';media.append(img);}
+      const link=safeEl('a','button outline media-source-link',w.url?tx('شاهد في المصدر ↗','Watch at source ↗'):tx('افتح مكتبة الأعمال ↗','Open the work collection ↗'));
+      link.href=sourceUrl(w);link.target='_blank';link.rel='noopener noreferrer';media.append(link);
+    }
+    const source=$('film-source');source.href=sourceUrl(w);source.target='_blank';source.rel='noopener noreferrer';
+    source.textContent=!w.url?tx('افتح مكتبة الأعمال ↗','Open the work collection ↗'):playable(w)?tx('العمل واعتماداته في المصدر ↗','Original work & credits ↗'):tx('شاهد في المصدر ↗','Watch at source ↗');
+  }
+  function openWork(id,trigger){if(!worksById.has(id))return;activeWork=id;lastTrigger=trigger||document.activeElement;renderFilm();if(!$('film-dialog').open)$('film-dialog').showModal();document.body.style.overflow='hidden';}
+  function clearFilm(){
+    const closedWork=activeWork;clearFilmMedia();activeWork=null;document.body.style.overflow='';
+    const trigger=lastTrigger?.isConnected?lastTrigger:Array.from(document.querySelectorAll('[data-work]')).find(b=>b.dataset.work===closedWork);
+    if(!skipFilmReturnFocus)trigger?.focus({preventScroll:true});lastTrigger=null;skipFilmReturnFocus=false;
+  }
   function startIntent(intent){$('intent').value=intent;$('brief-selection').hidden=intent!=='project';if(intent==='cv'&&!$('project-idea').value)$('project-idea').value=tx('أرغب في الاطلاع على سيرتك الذاتية. الجهة والغرض من الطلب: ','I would like to request your CV. Organisation and reason for the request: ');}
-  function legacyRoute(){const hash=location.hash.slice(1);if(['voice','ai-audio','collaborators','stories','showcase'].includes(hash)){location.replace('work.html'+(lang==='en'?'?lang=en':'')+'#'+hash);return true;}return false;}
+  function legacyRoute(){const hash=location.hash.slice(1);if(hash==='showcase'){location.replace('work.html'+(lang==='en'?'?lang=en':'')+'#'+hash);return true;}if(hash==='stories'){workFilter='stories';renderWorks();}return false;}
   document.querySelectorAll('[data-route]').forEach(b=>b.addEventListener('click',()=>{route=b.dataset.route;specific=null;renderService();persist();}));
   $('service-choice').addEventListener('change',e=>{selected[route]=e.target.value;specific=null;renderService();});
   $('service-example').addEventListener('click',e=>{e.preventDefault();openWork(current().example,e.currentTarget);});
   document.querySelectorAll('[data-work]').forEach(b=>b.addEventListener('click',()=>openWork(b.dataset.work,b)));
+  document.querySelectorAll('[data-work-filter]').forEach(b=>b.addEventListener('click',()=>{if(!['featured','ads','stories'].includes(b.dataset.workFilter))return;workFilter=b.dataset.workFilter;renderWorks();}));
   $('language').addEventListener('click',()=>{lang=lang==='ar'?'en':'ar';renderLanguage();persist();});
   document.querySelectorAll('[data-specific-ar]').forEach(b=>b.addEventListener('click',()=>{specific=[b.dataset.specificAr,b.dataset.specificEn];startIntent('project');renderSelection();$('project-idea').value=tx('أحتاج إلى ','I need ')+pick(specific);$('brief').scrollIntoView();$('project-idea').focus({preventScroll:true});}));
   document.querySelectorAll('[data-intent]').forEach(a=>a.addEventListener('click',()=>startIntent(a.dataset.intent)));
@@ -53,7 +152,7 @@
   $('intent').addEventListener('change',()=>startIntent($('intent').value));
   $('close-film').addEventListener('click',()=>$('film-dialog').close());$('film-dialog').addEventListener('close',clearFilm);
   $('film-dialog').addEventListener('click',e=>{if(e.target!==$('film-dialog'))return;const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();});
-  $('film-project').addEventListener('click',()=>{const w=works.find(w=>w.id===activeWork);$('project-idea').value=tx('أرغب في مشروع بأسلوب ','I would like a project in the style of ')+w[lang];specific=['عمل بأسلوب '+w.ar,'A project in the style of '+w.en];startIntent('project');renderSelection();$('film-dialog').close();$('brief').scrollIntoView();$('project-idea').focus({preventScroll:true});});
+  $('film-project').addEventListener('click',()=>{const w=worksById.get(activeWork);if(!w)return;$('project-idea').value=tx('أرغب في مشروع بأسلوب ','I would like a project in the style of ')+w[lang];specific=['عمل بأسلوب '+w.ar,'A project in the style of '+w.en];startIntent('project');renderSelection();skipFilmReturnFocus=true;$('film-dialog').close();$('brief').scrollIntoView();$('project-idea').focus({preventScroll:true});});
   $('quick-brief').addEventListener('submit',e=>{e.preventDefault();if(!$('quick-brief').reportValidity())return;const name=$('client-name').value.trim(),idea=$('project-idea').value.trim();if(!name||!idea){$('form-status').textContent=tx('يرجى إدخال الاسم ووصف قصير.','Please enter your name and a short description.');return;}const reason=$('intent').selectedOptions[0].textContent;const selectedText=$('intent').value==='project'?'\n'+$('brief-selection').textContent:'';const message=tx('مرحبًا سلمان، أنا ','Hello Salman, I’m ')+name+'\n'+reason+selectedText+'\n\n'+idea;const url='https://wa.me/96569975288?text='+encodeURIComponent(message);$('whatsapp-fallback').href=url;$('whatsapp-fallback').hidden=false;$('form-status').textContent=tx('رسالتك جاهزة للمراجعة والإرسال في واتساب.','Your message is ready to review and send in WhatsApp.');window.open(url,'_blank','noopener,noreferrer');});
   window.addEventListener('hashchange',legacyRoute);
   if(!legacyRoute())renderLanguage();

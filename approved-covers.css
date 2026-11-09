@@ -1,14 +1,14 @@
-/* Approved 1122 x 1402 posters: retain the complete artwork and its credits. */
+/* Refreshed 4:5 posters across the entire portfolio: retain the complete artwork and its credits. */
 
 /* Selected-work cards: the watch label follows the artwork. */
-.cinema-card:is([data-case="gamestore"],[data-case="ayat-magic"],[data-case="recurring-numbers"]) .work-visual {
+.cinema-card .work-visual {
   display:flex;
   flex-direction:column;
   aspect-ratio:auto;
   overflow:hidden;
   background:#080711;
 }
-.cinema-card:is([data-case="gamestore"],[data-case="ayat-magic"],[data-case="recurring-numbers"]) .work-visual img {
+.cinema-card .work-visual img {
   display:block;
   width:100%;
   height:auto;
@@ -17,12 +17,12 @@
   object-position:center;
   transform:none;
 }
-.cinema-card:is([data-case="gamestore"],[data-case="ayat-magic"],[data-case="recurring-numbers"]) .work-visual::after,
-.cinema-card:is([data-case="gamestore"],[data-case="ayat-magic"],[data-case="recurring-numbers"]) .work-visual .film-number,
-.cinema-card:is([data-case="gamestore"],[data-case="ayat-magic"],[data-case="recurring-numbers"]) .work-visual .play {
+.cinema-card .work-visual::after,
+.cinema-card .work-visual .film-number,
+.cinema-card .work-visual .play {
   display:none;
 }
-.cinema-card:is([data-case="gamestore"],[data-case="ayat-magic"],[data-case="recurring-numbers"]) .work-visual .watch-label {
+.cinema-card .work-visual .watch-label {
   position:static;
   display:block;
   width:100%;
@@ -36,7 +36,7 @@
 }
 
 /* The opening poster is a separate column, with its play button below it. */
-.hero:has(#hero-image[src*="-cover-v2.jpg"]) {
+.hero:has(#hero-image[src*="covers-20261110/"]) {
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(0,.9fr);
   grid-template-areas:"copy art" "copy film" "bottom bottom";
@@ -45,14 +45,14 @@
   min-height:0;
   padding:52px 6vw 32px;
 }
-.hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-copy {
+.hero:has(#hero-image[src*="covers-20261110/"]) .hero-copy {
   grid-area:copy;
   width:100%;
   max-width:none;
   min-width:0;
   align-self:center;
 }
-.hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-art {
+.hero:has(#hero-image[src*="covers-20261110/"]) .hero-art {
   grid-area:art;
   position:relative;
   inset:auto;
@@ -65,7 +65,7 @@
   border:1px solid #624276;
   background:#080711;
 }
-.hero:has(#hero-image[src*="-cover-v2.jpg"]) #hero-image {
+.hero:has(#hero-image[src*="covers-20261110/"]) #hero-image {
   position:static;
   display:block;
   width:100%;
@@ -76,10 +76,10 @@
   opacity:1;
   filter:none;
 }
-.hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-shade {
+.hero:has(#hero-image[src*="covers-20261110/"]) .hero-shade {
   display:none;
 }
-.hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-film {
+.hero:has(#hero-image[src*="covers-20261110/"]) .hero-film {
   grid-area:film;
   position:static;
   inset:auto;
@@ -92,7 +92,7 @@
   padding:16px 20px;
   background:#171020;
 }
-.hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-bottom {
+.hero:has(#hero-image[src*="covers-20261110/"]) .hero-bottom {
   grid-area:bottom;
   position:static;
   inset:auto;
@@ -103,8 +103,8 @@
 }
 
 /* The project brief and collaborator card inherit the shared cover image. */
-.brief-sample-action img[src*="-cover-v2.jpg"],
-.collaborator-cover img[src*="-cover-v2.jpg"] {
+.brief-sample-action img[src*="covers-20261110/"],
+.collaborator-cover img[src*="covers-20261110/"] {
   display:block;
   width:100%;
   height:auto;
@@ -113,7 +113,7 @@
   object-position:center;
   opacity:1;
 }
-.brief-sample-action:has(img[src*="-cover-v2.jpg"]) .brief-sample-label {
+.brief-sample-action:has(img[src*="covers-20261110/"]) .brief-sample-label {
   position:static;
   display:block;
   padding:13px 14px;
@@ -123,17 +123,17 @@
 }
 
 /* Story-library preview: move its controls and remove its redundant badge. */
-.curated-media:has(.curated-poster[src*="-cover-v2.jpg"]) {
+.curated-media:has(.curated-poster[src*="covers-20261110/"]) {
   flex-direction:column;
   min-height:0;
   align-self:start;
 }
-.curated-poster-link:has(.curated-poster[src*="-cover-v2.jpg"]) {
+.curated-poster-link:has(.curated-poster[src*="covers-20261110/"]) {
   flex-direction:column;
   height:auto;
   min-height:0;
 }
-.curated-poster[src*="-cover-v2.jpg"] {
+.curated-poster[src*="covers-20261110/"] {
   display:block;
   width:100%;
   height:auto;
@@ -142,10 +142,10 @@
   object-fit:contain;
   object-position:center;
 }
-.curated-media:has(.curated-poster[src*="-cover-v2.jpg"]) .curated-frame-label {
+.curated-media:has(.curated-poster[src*="covers-20261110/"]) .curated-frame-label {
   display:none;
 }
-.curated-poster-link:has(.curated-poster[src*="-cover-v2.jpg"]) .curated-watch-sign {
+.curated-poster-link:has(.curated-poster[src*="covers-20261110/"]) .curated-watch-sign {
   position:static;
   width:100%;
   max-width:none;
@@ -159,12 +159,12 @@
 }
 
 /* Modal previews preserve the full artwork within the available viewport. */
-.youtube-launch:has(img[src*="-cover-v2.jpg"]) .play {
+.youtube-launch:has(img[src*="covers-20261110/"]) .play {
   display:none;
 }
-.youtube-launch img[src*="-cover-v2.jpg"],
-#dialog-media>img[src*="-cover-v2.jpg"],
-.dialog-screen video[poster*="-cover-v2.jpg"] {
+.youtube-launch img[src*="covers-20261110/"],
+#dialog-media>img[src*="covers-20261110/"],
+.dialog-screen video[poster*="covers-20261110/"] {
   display:block;
   width:100%;
   height:auto;
@@ -175,10 +175,10 @@
 }
 
 /* Vision-session opener, work samples, and Lara's shared story poster. */
-#salman-vision-session .vs-art img[src*="-cover-v2.jpg"],
-#salman-vision-session .vs-voice-sample img[src*="-cover-v2.jpg"],
-#salman-vision-session .vs-case .vs-art img[src*="-cover-v2.jpg"],
-#salman-vision-session .vs-film[poster*="-cover-v2.jpg"] {
+#salman-vision-session .vs-art img[src*="covers-20261110/"],
+#salman-vision-session .vs-voice-sample img[src*="covers-20261110/"],
+#salman-vision-session .vs-case .vs-art img[src*="covers-20261110/"],
+#salman-vision-session .vs-film[poster*="covers-20261110/"] {
   display:block;
   width:100%;
   height:auto;
@@ -188,7 +188,7 @@
   object-position:center;
   background:#080711;
 }
-#salman-vision-session .vs-player-trigger:has(img[src*="-cover-v2.jpg"])>span {
+#salman-vision-session .vs-player-trigger:has(img[src*="covers-20261110/"])>span {
   position:static;
   display:block;
   margin:0;
@@ -200,36 +200,43 @@
 
 /* Keep complete presentation posters within a comfortable desktop viewport. */
 @media(min-width:901px) {
-  #salman-vision-session .vs-art img[src*="-cover-v2.jpg"],
-  #salman-vision-session .vs-case .vs-art img[src*="-cover-v2.jpg"],
-  #salman-vision-session .vs-film[poster*="-cover-v2.jpg"] {
+  #salman-vision-session .vs-art img[src*="covers-20261110/"],
+  #salman-vision-session .vs-case .vs-art img[src*="covers-20261110/"],
+  #salman-vision-session .vs-film[poster*="covers-20261110/"] {
     width:min(100%,calc(min(64vh,620px) * 1122 / 1402));
     height:auto;
     max-height:min(64vh,620px);
     margin-inline:auto;
     object-fit:contain;
   }
-  #salman-vision-session .vs-cover .vs-art img[src*="-cover-v2.jpg"] {
+  #salman-vision-session .vs-cover .vs-art img[src*="covers-20261110/"] {
     width:min(100%,calc(min(64vh,560px) * 1122 / 1402));
     max-height:min(64vh,560px);
   }
-  #salman-vision-session .vs-player-trigger:has(img[src*="-cover-v2.jpg"]) {
+  #salman-vision-session .vs-player-trigger:has(img[src*="covers-20261110/"]) {
     width:min(100%,calc(min(64vh,620px) * 1122 / 1402));
     margin-inline:auto;
   }
 }
 
 @media(max-width:900px) {
-  .hero:has(#hero-image[src*="-cover-v2.jpg"]) {
+  .hero:has(#hero-image[src*="covers-20261110/"]) {
     grid-template-columns:minmax(0,1fr);
     grid-template-areas:"copy" "art" "film" "bottom";
     gap:20px;
     padding:32px 6vw;
   }
-  .hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-art,
-  .hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-film {
+  .hero:has(#hero-image[src*="covers-20261110/"]) .hero-art,
+  .hero:has(#hero-image[src*="covers-20261110/"]) .hero-film {
     width:100%;
     max-width:560px;
     justify-self:center;
   }
 }
+
+/* All human performances and collaborator posters share the full-cover layout. */
+#voice-grid .voice-cover-visual{height:auto;aspect-ratio:4/5}
+#voice-grid .voice-cover-visual img{height:auto;aspect-ratio:4/5;object-fit:contain}
+.collaborator-cover img[src*="covers-20261110/"]{aspect-ratio:4/5;object-fit:contain}
+.youtube-launch:has(img[src*="covers-20261110/"]) .youtube-label{position:static;display:block;padding:14px;background:#171020;text-align:center}
+.curated-audio-media:has(.curated-poster[src*="covers-20261110/"]) .curated-audio-player{position:static;width:100%;padding:12px}
