@@ -1,0 +1,24 @@
+.brand small{font-size:8px;letter-spacing:1.2px;color:#d6c2e8}
+.creator-signature{display:inline-flex;align-items:center;gap:12px;margin-bottom:20px;color:var(--paper)}
+.creator-signature img{width:48px;height:48px;border:1px solid #be87e78c;border-radius:50%;object-fit:cover}
+.creator-signature strong{display:block;font-size:21px;letter-spacing:.3px;line-height:1.4}
+.creator-signature small{display:block;font-size:10px;line-height:1.8;color:#bdaacb;margin-top:3px}
+.professional-title{direction:ltr;unicode-bidi:isolate;letter-spacing:.8px;font-family:Arial,sans-serif!important}
+html[lang=ar] .professional-title{text-align:right}
+.hero .professional-title{font-size:11px;line-height:1.7;margin-bottom:12px;text-transform:uppercase}
+html[lang=ar] .hero h1{font-size:clamp(48px,5.5vw,84px);line-height:1.25;margin-block:14px 20px}
+.hero{padding-top:65px;padding-bottom:130px;min-height:850px}
+.hero .lead{font-size:16px}
+html[lang=ar] .hero .lead{font-size:15px;line-height:2}
+.service-selector{grid-template-columns:repeat(3,minmax(0,1fr))}
+.service-selector button:nth-child(3){border-inline-end:0}
+.service-selector button:nth-child(-n+3){border-bottom:1px solid #cbbbd4}
+.service-selector button{min-height:104px}
+.about-section{align-items:start}
+.about-portrait{position:sticky;top:120px}
+.about-copy .professional-title{font-size:16px!important;line-height:1.6!important;letter-spacing:.2px}
+.voice-proof-link{display:inline-block;margin-top:25px;color:#d6b5ed}
+.voice-project-link{display:inline-block;margin-top:30px;margin-inline-end:25px;color:#d6b5ed}
+.skill-tags span{font-size:9px;letter-spacing:.4px}
+@media(max-width:1000px){.hero{min-height:820px;padding-top:50px}.hero .creator-signature strong{font-size:19px}.hero .professional-title{font-size:10px}}
+@media(max-width:700px){.hero{min-height:0;padding:32px 6vw 42px}.creator-signature{margin-bottom:17px;gap:10px}.creator-signature img{width:42px;height:42px}.creator-signature strong{font-size:19px}.creator-signature small{font-size:9px}.hero .professional-title{font-size:10px;letter-spacing:.3px;max-width:310px}html[lang=ar] .hero h1{font-size:clamp(48px,12.3vw,72px);line-height:1.36}.hero .lead,html[lang=ar] .hero .lead{font-size:14px;line-height:2}.service-selector{grid-template-columns:repeat(2,minmax(0,1fr))}.service-selector button:nth-child(3){border-inline-end:1px solid #cbbbd4}.service-selector button:nth-child(2n){border-inline-end:0}.service-selector button:nth-child(-n+4){border-bottom:1px solid #cbbbd4}.service-selector button{min-height:96px}.about-portrait{position:relative;top:auto}.about-copy .professional-title{font-size:15px!important}.voice-project-link{margin-inline-end:0;display:block;width:fit-content}.brand small{font-size:6px;letter-spacing:.65px}}
