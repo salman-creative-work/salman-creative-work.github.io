@@ -24,7 +24,7 @@
     tone: [['warm','دافئ وقريب','Warm & approachable'],['dramatic','درامي وعميق','Dramatic & expressive'],['confident','واثق وإعلاني','Confident & commercial'],['character','تمثيل شخصية','Character performance'],['educational','واضح ومعرفي','Clear & informative'],['unsure','اقترح عليّ','Suggest a tone']],
     music: [['ai','موسيقى خاصة بالـAI','Custom AI music'],['existing','لدي موسيقى','I have music'],['none','بدون موسيقى','No music'],['unsure','اقترح الأنسب','Suggest the best fit']],
     mood: [['epic','ملحمي وسينمائي','Epic & cinematic'],['warm','دافئ وعاطفي','Warm & emotional'],['mysterious','غامض ومشوّق','Mysterious & suspenseful'],['energetic','حيوي وإيقاعي','Energetic & rhythmic'],['calm','هادئ وتأملي','Calm & reflective'],['unsure','اقترح عليّ','Suggest a mood']],
-    musicType: [['instrumental','موسيقى آلية','Instrumental'],['vocal','لحن مع كلمات وغناء بالـAI','Lyrics & AI vocals'],['identity','هوية أو توقيع موسيقي قصير','Short sonic identity'],['unsure','اقترح الأنسب','Suggest the best fit']],
+    musicType: [['instrumental','موسيقى آلية','Instrumental'],['vocal','أغنية بكلمات مكتوبة وغناء مُنتَج بالـAI','Written lyrics with AI-produced vocals'],['identity','هوية أو توقيع موسيقي قصير','Short sonic identity'],['unsure','اقترح الأنسب','Suggest the best fit']],
     editNeeds: [['pacing','بناء الإيقاع والسرد','Pacing & narrative'],['sound','معالجة الصوت والمكساج','Sound treatment & mixing'],['colour','تصحيح اللون','Colour correction'],['captions','ترجمة أو كتابة على الشاشة','Captions & on-screen text'],['arabic','تدقيق وصياغة عربية','Arabic language review'],['unsure','اقترح ما يحتاجه العمل','Recommend what the work needs']],
     campaign: [['strategy','خطة وأفكار محتوى','Content plan & ideas'],['scripts','كتابة ونصوص','Writing & scripts'],['production','إنتاج محتوى مرئي وصوتي','Visual & audio production'],['full','خطة وإنتاج ونشر','Planning, production & publishing'],['unsure','اقترح الأنسب','Suggest the best fit']],
     channels: [['vertical','منصات الفيديو العمودي','Vertical video platforms'],['horizontal','يوتيوب أو عرض أفقي','YouTube or horizontal screens'],['audio','منصة صوتية أو بودكاست','Audio platform or podcast'],['multiple','عدة منصات ومقاسات','Multiple platforms & formats'],['unsure','أحتاج اقتراحك','Help me decide']],
@@ -208,7 +208,7 @@
       items.push(pair('مراجعة النطق والإلقاء والمعالجة الصوتية','Pronunciation, delivery and sound treatment'));
     }else if(s==='music'){
       items.push(pair('تطوير اتجاه موسيقي وإنتاج لحن بالـAI','Develop a musical direction and produce an AI melody'));
-      if(state.musicType==='vocal')items.push(pair('تطوير الكلمات والغناء بالـAI بحسب الاتفاق','Lyrics and AI vocal development as agreed'));
+      if(state.musicType==='vocal')items.push(pair('كتابة الكلمات أو تطويرها، وإنتاج الغناء بالـAI بحسب الاتفاق','Write or develop lyrics, and produce AI vocals as agreed'));
       items.push(pair('معالجة الصوت وتكييف المقطوعة للاستخدام','Sound treatment and adaptation to the intended use'));
     }else if(s==='edit'){
       const meaningful=state.editNeeds.filter(x=>x!=='unsure');
