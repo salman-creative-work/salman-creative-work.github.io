@@ -32,24 +32,81 @@
     cadence: [['oneoff','مشروع أو حملة واحدة','One project or campaign'],['monthly','خطة أو محتوى لشهر','A month of planning or content'],['ongoing','تعاون ومحتوى مستمر','Ongoing content and collaboration'],['unsure','اقترح النطاق المناسب','Recommend a suitable scope']]
   };
   const state = {
-    service:'', goal:'', project:'', audience:'', start:'', references:'',
+    service:'', goal:'', project:'', audience:'', start:'', references:'', referenceWork:null,
     style:'', voice:'', tone:'', voiceLanguage:'', music:'', mood:'', musicType:'', musicUse:'',
     editNeeds:[], campaign:'', directionNote:'', channels:[], duration:'', deadline:'', budget:'', requester:'', contact:''
   };
   let step = 0, errorKeys = [], copied = false, fallback = false;
   const stepNames = [pair('الخدمة','Service'),pair('الهدف','Purpose'),pair('البداية','Starting point'),pair('الأسلوب','Direction'),pair('التسليم','Delivery'),pair('المراجعة','Review')];
   const node = (tag, cls, content) => { const e=document.createElement(tag); if(cls)e.className=cls; if(content!==undefined)e.textContent=content; return e; };
-  const availableOptions = key => key==='duration' && state.service==='campaign' ? options.cadence : options[key]||[];
+  const availableOptions = key => key==='duration' && state.service==='campaign' ? options.cadence : key==='voice' && state.service==='voice' ? options.voice.filter(item=>item[0]!=='none') : options[key]||[];
   const labelFor = (key,value) => { const item=availableOptions(key).find(x=>x[0]===value); return item?item[language()==='ar'?1:2]:''; };
   const selectedText = key => Array.isArray(state[key]) ? state[key].map(v=>labelFor(key,v)).join(t('، ', ', ')) : labelFor(key,state[key]);
   const isFilm = () => ['film','story'].includes(state.service);
-  const branchKeys = ['style','voice','tone','voiceLanguage','music','mood','musicType','musicUse','editNeeds','campaign','directionNote'];
+  const durationChoices = {standard:'',campaign:''};
   function setService(value) {
     if (state.service===value) return;
-    if((state.service==='campaign')!==(value==='campaign')||value==='unsure')state.duration='';
+    const oldMode=state.service==='campaign'?'campaign':'standard';
+    const newMode=value==='campaign'?'campaign':'standard';
+    durationChoices[oldMode]=state.duration;
+    if(oldMode!==newMode)state.duration=durationChoices[newMode];
     state.service=value;
-    branchKeys.forEach(key=>{state[key]=key==='editNeeds'?[]:'';});
     errorKeys=[];
+  }
+  const collectionKey={cinema:'cinema',story:'stories',audio:'aiAudio',voice:'voice'};
+  const collectionLabels={cinema:pair('أفلام وإعلانات','Films & advertising'),story:pair('حكايات وعوالم','Stories & worlds'),audio:pair('أصوات وغناء بالـAI','AI voices & singing'),voice:pair('أداء سلمان البشري','Salman’s human performance')};
+  function findWork(reference){
+    if(!reference||!collectionKey[reference.collection])return null;
+    const work=(window.PORTFOLIO_DATA?.[collectionKey[reference.collection]]||[]).find(item=>item.id===reference.id);
+    return work?{collection:reference.collection,work}:null;
+  }
+  function workPreset(sample){
+    const id=sample.work.id, collection=sample.collection;
+    let preset;
+    if(collection==='voice')preset={service:'voice',voice:'human',tone:id==='wallace'?'dramatic':id==='smurfs'?'character':'confident'};
+    else if(collection==='audio')preset=id==='haydarah-song'?{service:'music',musicType:'vocal',mood:'warm'}:{service:'voice',voice:'ai',tone:'educational'};
+    else if(collection==='story'||sample.work.type==='story')preset={service:'story',goal:'story',style:'fantasy'};
+    else preset={service:'film',goal:sample.work.type==='ad'?'awareness':'launch',style:id==='ayat-magic'?'playful':id==='qamar'||id==='cinderella'?'fantasy':'cinematic'};
+    const supported=['service','style','voice','tone','music','mood','musicType'];
+    Object.entries(sample.work.briefPreset||{}).forEach(([key,value])=>{
+      if(supported.includes(key)&&options[key].some(option=>option[0]===value))preset[key]=value;
+    });
+    return preset;
+  }
+  function applyReference(sample){
+    const preset=workPreset(sample);setService(preset.service);
+    Object.entries(preset).forEach(([key,value])=>{
+      if(key==='service')return;
+      if(key!=='goal'||!state.goal)state[key]=value;
+    });
+    state.referenceWork={collection:sample.collection,id:sample.work.id};
+    errorKeys=[];copied=false;fallback=false;
+  }
+  function openExample(sample,trigger){
+    if(sample.collection==='cinema'){
+      const index=(window.PORTFOLIO_DATA.cinema||[]).findIndex(item=>item.id===sample.work.id);
+      if(index>=0&&typeof openWork==='function')openWork(index,trigger);
+    }else if(typeof window.openCuratedWork==='function')window.openCuratedWork(sample.collection,sample.work.id);
+  }
+  function referencePicker(){
+    const wrap=node('div','brief-field brief-reference-picker');
+    const label=node('label','brief-input-label',t('عمل من المعرض يلهم مشروعك','A portfolio reference for your project'));label.htmlFor='brief-work-reference';
+    label.append(node('span','brief-optional',t('اختياري','Optional')));
+    const select=node('select','brief-input');select.id='brief-work-reference';select.name='workReference';
+    const empty=node('option','',t('بدون نموذج محدد','No specific reference'));empty.value='';select.append(empty);
+    Object.entries(collectionKey).forEach(([collection,key])=>{
+      const group=node('optgroup');group.label=text(collectionLabels[collection]);
+      (window.PORTFOLIO_DATA?.[key]||[]).forEach(work=>{const choice=node('option','',work[language()]);choice.value=collection+':'+work.id;group.append(choice);});
+      if(group.children.length)select.append(group);
+    });
+    select.value=state.referenceWork?state.referenceWork.collection+':'+state.referenceWork.id:'';
+    select.addEventListener('change',()=>{
+      const [collection,id]=select.value.split(':'),sample=findWork({collection,id});
+      if(sample)applyReference(sample);else state.referenceWork=null;
+      copied=false;fallback=false;render();document.getElementById('brief-work-reference')?.focus({preventScroll:true});
+    });
+    wrap.append(label,select,node('p','brief-hint',t('اختر مرجعًا للاتجاه العام. فكرتك تُطوَّر لهوية مشروعك، ويمكنك تغيير النموذج أو إزالته.','Choose a reference for the overall direction. Your idea is developed for your own identity; you can change or remove this example.')));
+    return wrap;
   }
   function update(key,value) {
     if(key==='service')setService(value);else state[key]=value;
@@ -171,6 +228,8 @@
     add(pair('المشروع أو العلامة','Project or brand'),state.project,1);
     add(pair('الجمهور والرسالة','Audience & message'),state.audience,1);
     add(pair('نقطة البداية','Starting point'),selectedText('start'),2);
+    const reference=findWork(state.referenceWork);
+    if(reference)add(pair('النموذج الملهم من أعمال سلمان','Reference from Salman’s work'),reference.work[language()]+(reference.work.url?' — '+reference.work.url:''),2);
     add(pair('المواد والمراجع','Material & references'),state.references,2);
     if(isFilm()){
       add(pair('الأسلوب البصري','Visual direction'),selectedText('style'),3);
@@ -210,21 +269,23 @@
     if(copy&&!fallback)copy.hidden=true;
   }
   function cardExample(){
-    const data=window.PORTFOLIO_DATA||{cinema:[],voice:[]};
+    const chosen=findWork(state.referenceWork);if(chosen)return {...chosen,chosen:true};
     if(state.service==='voice'){
       if(state.voice==='human'){
-        const w=data.voice.find(x=>state.tone==='dramatic'?x.url.includes('DHbjUHqtJK9'):x.url.includes('DOi890hjcMb'))||data.voice[0];
-        return w?{work:w,human:true}:null;
+        return findWork({collection:'voice',id:state.tone==='dramatic'?'wallace':state.tone==='character'?'smurfs':'joker'});
       }
+      if(state.voice==='ai')return findWork({collection:'audio',id:state.tone==='dramatic'?'zork-narrator':'moses-voice'});
       return null;
     }
-    if(['music','unsure',''].includes(state.service))return null;
+    if(state.service==='music')return state.musicType==='vocal'?findWork({collection:'audio',id:'haydarah-song'}):null;
+    if(['unsure',''].includes(state.service))return null;
+    if(state.service==='story')return findWork({collection:'story',id:state.style==='dramatic'?'recurring-numbers':'sylvester-zark'});
     let id=state.service==='story'?'narrator':state.service==='edit'?'violet':'gamestore';
     if(state.style==='fantasy')id='qamar';
     if(state.style==='playful')id='ayat-magic';
     if(state.style==='dramatic')id='narrator';
     if(state.style==='realistic')id='violet';
-    const work=data.cinema.find(x=>x.id===id);return work?{work,human:false}:null;
+    return findWork({collection:'cinema',id});
   }
   function renderCard(){
     const card=document.getElementById('brief-concept');if(!card)return;card.replaceChildren();
@@ -235,11 +296,15 @@
     const sample=cardExample();
     if(sample){
       const wrap=node('div','brief-sample');
-      const action=node(sample.human?'a':'button','brief-sample-action');
-      if(sample.human){action.href=sample.work.url;action.target='_blank';action.rel='noopener';}else{action.type='button';action.addEventListener('click',()=>{const index=window.PORTFOLIO_DATA.cinema.findIndex(x=>x.id===sample.work.id);if(index>=0&&typeof openWork==='function')openWork(index,action);});}
+      const action=node('button','brief-sample-action');action.type='button';action.addEventListener('click',()=>openExample(sample,action));
       const img=node('img');img.src=sample.work.image;img.alt=sample.work[language()];img.loading='lazy';
-      const line=node('span','brief-sample-label',sample.human?t('استمع إلى أداء سلمان البشري ↗','Listen to Salman’s human performance ↗'):t('شاهد مثالًا من أعمالي ▶','Watch a work example ▶'));
-      action.append(img,line);wrap.append(action,node('p','brief-sample-caption',sample.work[language()]));card.append(wrap);
+      const line=node('span','brief-sample-label',sample.collection==='voice'?t('استمع إلى أداء سلمان البشري ▶','Listen to Salman’s human performance ▶'):sample.collection==='audio'?t('استكشف النموذج الصوتي بالـAI ▶','Explore the AI audio example ▶'):t('شاهد مثالًا من أعمالي ▶','Watch a work example ▶'));
+      action.append(img,line);wrap.append(action,node('p','brief-sample-caption',sample.work[language()]));
+      if(sample.chosen){
+        const selected=node('div','brief-selected-reference');selected.append(node('span','',t('مرجعك المختار','Your selected reference')));
+        const change=node('button','brief-edit',t('تغيير أو إزالة','Change or remove'));change.type='button';change.addEventListener('click',()=>move(2));selected.append(change);wrap.append(selected);
+      }
+      card.append(wrap);
     }else{
       const art=node('div','brief-sound-art');art.setAttribute('aria-hidden','true');const logo=node('img');logo.src='assets/oraktion-official-logo.jpg';logo.alt='';art.append(logo);card.append(art);
       if(state.service==='music'||state.service==='voice')card.append(node('p','brief-audio-note',t('نختار النموذج الصوتي المناسب معك عند مراجعة المشروع.','We will choose a suitable audio reference together when reviewing your project.')));
@@ -297,10 +362,13 @@
     form.append(node('p','brief-count',t('الخطوة ','STEP ')+(step+1)+t(' من 6',' OF 6')));
     const titles=[pair('ماذا تريد أن نصنع؟','What would you like to create?'),pair('ما الذي تريد تحقيقه؟','What would you like to achieve?'),pair('من أين نبدأ؟','Where do we begin?'),pair('كيف تتخيّل العمل؟','How do you imagine it?'),pair('أين سيُعرض ومتى تحتاجه؟','Where will it appear, and when?'),pair('هذا موجز مشروعك.','Here is your project brief.')];
     const title=node('h3','brief-step-title',text(titles[step]));title.id='brief-step-title';title.tabIndex=-1;form.append(title);
+    if(state.referenceWork){
+      const context=node('p','brief-reference-context',t('ضُبطت الخدمة واتجاهها وفق النموذج المختار. يمكنك تعديلهما، وتبقى تفاصيل مشروعك محفوظة في الصفحة.','The service and direction follow your selected reference. You can adjust them; your project details remain in this page.'));form.append(context);
+    }
     const cardJump=node('button','brief-card-jump',t('عرض بطاقة تصورك ↓','View your concept card ↓'));cardJump.type='button';cardJump.addEventListener('click',()=>{const card=document.getElementById('brief-concept');card.focus({preventScroll:true});card.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});form.append(cardJump);
     if(step===0)form.append(choices('service',t('اختر الخدمة الأقرب لفكرتك','Choose the closest service'),{required:true}));
     if(step===1)form.append(choices('goal',t('ما الهدف الأساسي؟','What is the main purpose?'),{required:true}),inputField('project',t('اسم المشروع أو العلامة','Project or brand name'),{limit:100}),inputField('audience',t('الجمهور والرسالة بجملة','Your audience and message in a sentence'),{multiline:true,limit:180,placeholder:t('لمن نقدم العمل، وماذا نريد أن يشعر أو يفهم؟','Who is it for, and what should they feel or understand?')}));
-    if(step===2)form.append(choices('start',t('ماذا لديك الآن؟','What do you have so far?'),{required:true}),inputField('references',t('مواد أو مراجع تريد ذكرها','Materials or references to mention'),{multiline:true,limit:240,placeholder:t('صف المواد أو أضف رابطًا لمرجع مناسب.','Describe your material or add a useful reference link.'),hint:t('يمكن مشاركة الملفات لاحقًا أثناء المراسلة.','You can share files later in the conversation.')}));
+    if(step===2)form.append(choices('start',t('ماذا لديك الآن؟','What do you have so far?'),{required:true}),referencePicker(),inputField('references',t('مواد أو مراجع تريد ذكرها','Materials or references to mention'),{multiline:true,limit:240,placeholder:t('صف المواد أو أضف رابطًا لمرجع مناسب.','Describe your material or add a useful reference link.'),hint:t('يمكن مشاركة الملفات لاحقًا أثناء المراسلة.','You can share files later in the conversation.')}));
     if(step===3)branch(form);
     if(step===4){
       form.append(choices('channels',t('المنصات والمقاسات المطلوبة','Platforms and formats'),{required:true,multiple:true,description:t('اختر ما يناسبك، أو دعني أقترح الصيغة.','Choose what fits, or let me recommend a format.')}));
@@ -322,6 +390,13 @@
   window.startCreativeBrief=service=>{
     if(options.service.some(x=>x[0]===service)){setService(service);step=1;}else step=0;
     errorKeys=[];render();focusStep();
+  };
+  window.startProjectFromWork=reference=>{
+    const sample=findWork(reference);if(!sample)return false;
+    applyReference(sample);
+    step=0;errorKeys=[];copied=false;fallback=false;
+    const dialog=document.getElementById('work-dialog');if(dialog?.open)dialog.close();
+    render();focusStep();return true;
   };
   render();
 })();
