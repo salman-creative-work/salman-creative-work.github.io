@@ -1,0 +1,235 @@
+/* Approved 1122 x 1402 posters: retain the complete artwork and its credits. */
+
+/* Selected-work cards: the watch label follows the artwork. */
+.cinema-card:is([data-case="gamestore"],[data-case="ayat-magic"],[data-case="recurring-numbers"]) .work-visual {
+  display:flex;
+  flex-direction:column;
+  aspect-ratio:auto;
+  overflow:hidden;
+  background:#080711;
+}
+.cinema-card:is([data-case="gamestore"],[data-case="ayat-magic"],[data-case="recurring-numbers"]) .work-visual img {
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1122/1402;
+  object-fit:contain;
+  object-position:center;
+  transform:none;
+}
+.cinema-card:is([data-case="gamestore"],[data-case="ayat-magic"],[data-case="recurring-numbers"]) .work-visual::after,
+.cinema-card:is([data-case="gamestore"],[data-case="ayat-magic"],[data-case="recurring-numbers"]) .work-visual .film-number,
+.cinema-card:is([data-case="gamestore"],[data-case="ayat-magic"],[data-case="recurring-numbers"]) .work-visual .play {
+  display:none;
+}
+.cinema-card:is([data-case="gamestore"],[data-case="ayat-magic"],[data-case="recurring-numbers"]) .work-visual .watch-label {
+  position:static;
+  display:block;
+  width:100%;
+  padding:13px 16px;
+  border-top:1px solid #624276;
+  background:#171020;
+  color:#f1e3fc;
+  font-size:12px;
+  line-height:1.8;
+  text-align:center;
+}
+
+/* The opening poster is a separate column, with its play button below it. */
+.hero:has(#hero-image[src*="-cover-v2.jpg"]) {
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,.9fr);
+  grid-template-areas:"copy art" "copy film" "bottom bottom";
+  gap:20px 5vw;
+  align-items:start;
+  min-height:0;
+  padding:52px 6vw 32px;
+}
+.hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-copy {
+  grid-area:copy;
+  width:100%;
+  max-width:none;
+  min-width:0;
+  align-self:center;
+}
+.hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-art {
+  grid-area:art;
+  position:relative;
+  inset:auto;
+  z-index:auto;
+  order:initial;
+  width:100%;
+  height:auto;
+  margin:0;
+  overflow:hidden;
+  border:1px solid #624276;
+  background:#080711;
+}
+.hero:has(#hero-image[src*="-cover-v2.jpg"]) #hero-image {
+  position:static;
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1122/1402;
+  object-fit:contain;
+  object-position:center;
+  opacity:1;
+  filter:none;
+}
+.hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-shade {
+  display:none;
+}
+.hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-film {
+  grid-area:film;
+  position:static;
+  inset:auto;
+  z-index:auto;
+  order:initial;
+  width:100%;
+  min-width:0;
+  min-height:78px;
+  margin:0;
+  padding:16px 20px;
+  background:#171020;
+}
+.hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-bottom {
+  grid-area:bottom;
+  position:static;
+  inset:auto;
+  order:initial;
+  margin:12px 0 0;
+  min-width:0;
+  flex-wrap:wrap;
+}
+
+/* The project brief and collaborator card inherit the shared cover image. */
+.brief-sample-action img[src*="-cover-v2.jpg"],
+.collaborator-cover img[src*="-cover-v2.jpg"] {
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:1122/1402;
+  object-fit:contain;
+  object-position:center;
+  opacity:1;
+}
+.brief-sample-action:has(img[src*="-cover-v2.jpg"]) .brief-sample-label {
+  position:static;
+  display:block;
+  padding:13px 14px;
+  background:#171020;
+  border-top:1px solid #624276;
+  text-align:center;
+}
+
+/* Story-library preview: move its controls and remove its redundant badge. */
+.curated-media:has(.curated-poster[src*="-cover-v2.jpg"]) {
+  flex-direction:column;
+  min-height:0;
+  align-self:start;
+}
+.curated-poster-link:has(.curated-poster[src*="-cover-v2.jpg"]) {
+  flex-direction:column;
+  height:auto;
+  min-height:0;
+}
+.curated-poster[src*="-cover-v2.jpg"] {
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:none;
+  aspect-ratio:1122/1402;
+  object-fit:contain;
+  object-position:center;
+}
+.curated-media:has(.curated-poster[src*="-cover-v2.jpg"]) .curated-frame-label {
+  display:none;
+}
+.curated-poster-link:has(.curated-poster[src*="-cover-v2.jpg"]) .curated-watch-sign {
+  position:static;
+  width:100%;
+  max-width:none;
+  margin:0;
+  padding:13px 16px;
+  border:0;
+  border-top:1px solid #624276;
+  border-radius:0;
+  background:#171020;
+  box-shadow:none;
+}
+
+/* Modal previews preserve the full artwork within the available viewport. */
+.youtube-launch:has(img[src*="-cover-v2.jpg"]) .play {
+  display:none;
+}
+.youtube-launch img[src*="-cover-v2.jpg"],
+#dialog-media>img[src*="-cover-v2.jpg"],
+.dialog-screen video[poster*="-cover-v2.jpg"] {
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:70vh;
+  aspect-ratio:1122/1402;
+  object-fit:contain;
+  object-position:center;
+}
+
+/* Vision-session opener, work samples, and Lara's shared story poster. */
+#salman-vision-session .vs-art img[src*="-cover-v2.jpg"],
+#salman-vision-session .vs-voice-sample img[src*="-cover-v2.jpg"],
+#salman-vision-session .vs-case .vs-art img[src*="-cover-v2.jpg"],
+#salman-vision-session .vs-film[poster*="-cover-v2.jpg"] {
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:none;
+  aspect-ratio:1122/1402;
+  object-fit:contain;
+  object-position:center;
+  background:#080711;
+}
+#salman-vision-session .vs-player-trigger:has(img[src*="-cover-v2.jpg"])>span {
+  position:static;
+  display:block;
+  margin:0;
+  padding:13px 16px;
+  border:0;
+  border-top:1px solid #624276;
+  background:#171020;
+}
+
+/* Keep complete presentation posters within a comfortable desktop viewport. */
+@media(min-width:901px) {
+  #salman-vision-session .vs-art img[src*="-cover-v2.jpg"],
+  #salman-vision-session .vs-case .vs-art img[src*="-cover-v2.jpg"],
+  #salman-vision-session .vs-film[poster*="-cover-v2.jpg"] {
+    width:min(100%,calc(min(64vh,620px) * 1122 / 1402));
+    height:auto;
+    max-height:min(64vh,620px);
+    margin-inline:auto;
+    object-fit:contain;
+  }
+  #salman-vision-session .vs-cover .vs-art img[src*="-cover-v2.jpg"] {
+    width:min(100%,calc(min(64vh,560px) * 1122 / 1402));
+    max-height:min(64vh,560px);
+  }
+  #salman-vision-session .vs-player-trigger:has(img[src*="-cover-v2.jpg"]) {
+    width:min(100%,calc(min(64vh,620px) * 1122 / 1402));
+    margin-inline:auto;
+  }
+}
+
+@media(max-width:900px) {
+  .hero:has(#hero-image[src*="-cover-v2.jpg"]) {
+    grid-template-columns:minmax(0,1fr);
+    grid-template-areas:"copy" "art" "film" "bottom";
+    gap:20px;
+    padding:32px 6vw;
+  }
+  .hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-art,
+  .hero:has(#hero-image[src*="-cover-v2.jpg"]) .hero-film {
+    width:100%;
+    max-width:560px;
+    justify-self:center;
+  }
+}

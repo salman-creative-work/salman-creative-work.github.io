@@ -19,7 +19,7 @@ window.PORTFOLIO_COLLABORATORS = {
         creditAr: 'لارا: نور علي. القصة: سينسي. إبراهيم والرؤية والإخراج: سلمان.',
         creditEn: 'Lara: Noor Ali. Story: Sensei. Ibrahim, vision and direction: Salman.',
         url: 'https://www.youtube.com/watch?v=O_yIDS8B7Mo',
-        image: 'assets/DcwQqeeNfAf.jpg',
+        image: 'assets/oraktion-recurring-numbers-cover-v2.jpg',
         badgeAr: 'عمل مشترك / أداء شخصية',
         badgeEn: 'COLLABORATION / CHARACTER PERFORMANCE',
         watchAr: 'استمع إلى أداء لارا',
