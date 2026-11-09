@@ -2,6 +2,15 @@
   'use strict';
   const selected = { voice: 'joker', story: 'recurring-numbers', audio: null };
   const expandedIdea = { voice: null, story: null, audio: null };
+  let voiceCategory = 'all';
+  const voiceCategories = [
+    { id: 'all', ar: 'الكل', en: 'All' },
+    { id: 'live', ar: 'شخصيات بشرية', en: 'Live-action characters' },
+    { id: 'anime', ar: 'أنمي', en: 'Anime' },
+    { id: 'cartoon', ar: 'كرتون', en: 'Animation' },
+    { id: 'games', ar: 'ألعاب', en: 'Games' },
+    { id: 'voiceover', ar: 'تعليق ومناسبات', en: 'Voice-over & occasions' }
+  ];
   const collections = {
     voice: { mount: 'voice-grid', key: 'voice' },
     story: { mount: 'story-grid', key: 'stories' },
@@ -12,6 +21,13 @@
   const field = (work, key) => work[key + (currentLanguage() === 'ar' ? 'Ar' : 'En')] || '';
   const title = work => work[currentLanguage()] || work.en || work.ar || '';
   const items = kind => (window.PORTFOLIO_DATA || {})[collections[kind].key] || [];
+  const visibleItems = kind => kind === 'voice' && voiceCategory !== 'all'
+    ? items(kind).filter(work => work.performanceCategory === voiceCategory)
+    : items(kind);
+  const performanceType = work => {
+    const category = voiceCategories.find(item => item.id === work.performanceCategory);
+    return category ? text(category.ar, category.en) : text('أداء بشري', 'Human performance');
+  };
   const node = (tag, cls, content) => {
     const element = document.createElement(tag);
     if (cls) element.className = cls;
@@ -88,7 +104,7 @@
       frame.append(watch);
     } else frame.append(image);
     const marker = node('div', 'curated-frame-label');
-    marker.append(node('span', '', kind === 'voice' ? 'SAROVOX / HUMAN PERFORMANCE' : kind === 'audio' ? 'ORAKTION / AI VOICE & SINGING' : 'ORAKTION / STORY WORLDS'), node('span', 'curated-counter', number(index + 1) + ' / ' + number(total)));
+    marker.append(node('span', '', kind === 'voice' ? 'ORAKTION / SALMAN’S VOICE' : kind === 'audio' ? 'ORAKTION / AI VOICE & SINGING' : 'ORAKTION / STORY WORLDS'), node('span', 'curated-counter', number(index + 1) + ' / ' + number(total)));
     frame.append(marker);
     return frame;
   }
@@ -169,7 +185,7 @@
 
   function fillStage(kind) {
     const mount = document.getElementById(collections[kind].mount);
-    const list = items(kind);
+    const list = visibleItems(kind);
     const stage = mount?.querySelector('.curated-stage');
     if (!stage || !list.length) return;
     let index = list.findIndex(work => work.id === selected[kind]);
@@ -185,11 +201,12 @@
     heading.id = 'curated-' + kind + '-title';
     heading.tabIndex = -1;
     copy.append(kicker, heading);
+    if (kind === 'voice') copy.append(node('p', 'voice-performance-type', performanceType(work)));
     const focus = field(work, 'focus');
     if (focus) copy.append(node('p', 'curated-focus', focus));
     const description = field(work, 'description');
     if (description) copy.append(node('p', 'curated-description', description));
-    const media = buildMedia(work, kind, index, list.length);
+    const media = buildMedia(work, kind, items(kind).indexOf(work), items(kind).length);
     caseActions(work, kind, media, copy, mount);
     const details = node('div', 'curated-details');
     const role = detailBlock(text('مساهمتي في العمل', 'MY CONTRIBUTION'), field(work, 'role'));
@@ -210,20 +227,58 @@
     if (status) status.textContent = text('العمل المعروض: ', 'Selected work: ') + title(work);
   }
 
+  function voiceFilters() {
+    const tools = node('div', 'voice-library-tools');
+    const intro = node('p', 'voice-library-note', text(
+      'كل النماذج أداء بشري بصوت سلمان؛ اختر نوع العمل واستمع إلى اختلاف النبرة والشخصية.',
+      'Every sample features Salman’s human voice. Choose a type of work to explore the different tones and characters.'
+    ));
+    const filters = node('div', 'voice-category-filters');
+    filters.setAttribute('role', 'group');
+    filters.setAttribute('aria-label', text('نوع الأداء الصوتي', 'Voice performance type'));
+    for (const category of voiceCategories) {
+      const button = node('button', 'voice-category-filter', text(category.ar, category.en));
+      button.type = 'button';
+      button.id = 'voice-category-' + category.id;
+      button.dataset.voiceCategory = category.id;
+      button.setAttribute('aria-controls', 'curated-voice-stage voice-sample-options');
+      button.setAttribute('aria-pressed', String(voiceCategory === category.id));
+      button.addEventListener('click', () => {
+        if (voiceCategory === category.id) return;
+        voiceCategory = category.id;
+        renderCollection('voice');
+        document.getElementById('voice-category-' + category.id)?.focus({ preventScroll: true });
+      });
+      filters.append(button);
+    }
+    const count = visibleItems('voice').length;
+    const status = node('p', 'voice-filter-status', text(
+      'المعروض: ' + count + ' من ' + items('voice').length + ' نماذج',
+      'Showing ' + count + ' of ' + items('voice').length + ' samples'
+    ));
+    status.setAttribute('role', 'status');
+    status.setAttribute('aria-live', 'polite');
+    status.setAttribute('aria-atomic', 'true');
+    tools.append(intro, filters, status);
+    return tools;
+  }
+
   function renderCollection(kind) {
     const mount = document.getElementById(collections[kind].mount);
     if (!mount) return;
     stopMedia(mount);
     mount.replaceChildren();
     mount.classList.add('curated-collection', 'curated-' + kind);
-    const list = items(kind);
+    const list = visibleItems(kind);
     if (!list.length) return;
+    if (!list.some(work => work.id === selected[kind])) selected[kind] = list[0].id;
     const stage = node('article', 'curated-stage');
     stage.id = 'curated-' + kind + '-stage';
     const navigation = node('div', 'curated-navigation');
-    const navTitle = node('p', 'curated-nav-title', kind === 'voice' ? text('اختر مشهدًا. تعرّف إلى صوت آخر.', 'Choose a scene. Hear another character.') : kind === 'audio' ? text('اختر نموذجًا. استكشف الصوت والغناء بالـAI.', 'Choose a sample. Explore AI voice and singing.') : text('لكل حكاية باب. اختر عالمك.', 'Every story has a door. Choose a world.'));
+    const navTitle = node('p', 'curated-nav-title', kind === 'voice' ? text('اختر شخصية، واستكشف أدائي واعتمادات العمل.', 'Choose a character to explore my performance and the work’s credits.') : kind === 'audio' ? text('اختر نموذجًا. استكشف الصوت والغناء بالـAI.', 'Choose a sample. Explore AI voice and singing.') : text('لكل حكاية باب. اختر عالمك.', 'Every story has a door. Choose a world.'));
     navTitle.id = 'curated-' + kind + '-nav-title';
     const navigationList = node('ol', 'curated-selectors');
+    if (kind === 'voice') navigationList.id = 'voice-sample-options';
     navigationList.setAttribute('aria-labelledby', navTitle.id);
     list.forEach((work, index) => {
       const item = node('li');
@@ -233,10 +288,25 @@
       button.setAttribute('aria-controls', stage.id);
       button.setAttribute('aria-pressed', String(work.id === selected[kind]));
       const label = node('span', 'curated-select-copy');
+      if (kind === 'voice') label.append(node('span', 'voice-card-category', performanceType(work)));
       label.append(node('strong', '', title(work)));
       const focus = field(work, 'focus');
       if (focus) label.append(node('small', '', focus));
-      button.append(node('span', 'curated-select-number', number(index + 1)), label, node('span', 'curated-select-mark', '↗'));
+      if (kind === 'voice') {
+        button.classList.add('voice-cover-choice');
+        button.setAttribute('aria-label', text('عرض الأداء والتفاصيل: ', 'Show performance and credits: ') + title(work));
+        const top = node('span', 'voice-cover-top');
+        top.append(node('span', '', text('أداء بشري', 'HUMAN VOICE')), node('span', 'curated-select-number', number(items(kind).indexOf(work) + 1) + ' / ' + number(items(kind).length)));
+        const visual = node('span', 'voice-cover-visual');
+        const image = node('img');
+        image.src = work.image;
+        image.alt = '';
+        image.loading = 'lazy';
+        visual.append(image);
+        label.append(node('span', 'voice-card-role', text('سلمان · ', 'Salman · ') + field(work, 'role')));
+        label.append(node('span', 'voice-card-action', text('استكشف الأداء والاعتمادات ↗', 'Explore performance & credits ↗')));
+        button.append(top, visual, label);
+      } else button.append(node('span', 'curated-select-number', number(index + 1)), label, node('span', 'curated-select-mark', '↗'));
       button.addEventListener('click', () => {
         if (selected[kind] === work.id) return;
         selected[kind] = work.id;
@@ -253,6 +323,7 @@
     status.setAttribute('role', 'status');
     status.setAttribute('aria-live', 'polite');
     status.setAttribute('aria-atomic', 'true');
+    if (kind === 'voice') mount.append(voiceFilters());
     mount.append(stage, navigation, status);
     fillStage(kind);
   }
@@ -266,9 +337,14 @@
     kind = kind === 'stories' ? 'story' : ['aiAudio', 'ai-audio'].includes(kind) ? 'audio' : kind;
     if (!collections[kind] || !items(kind).some(work => work.id === id)) return false;
     selected[kind] = id;
+    let resetVoiceFilter = false;
+    if (kind === 'voice' && !visibleItems(kind).some(work => work.id === id)) {
+      voiceCategory = 'all';
+      resetVoiceFilter = true;
+    }
     const mount = document.getElementById(collections[kind].mount);
     if (!mount) return false;
-    if (!mount.querySelector('.curated-stage')) renderCollection(kind);
+    if (resetVoiceFilter || !mount.querySelector('.curated-stage')) renderCollection(kind);
     else fillStage(kind);
     const heading = document.getElementById('curated-' + kind + '-title');
     heading?.focus({ preventScroll: true });

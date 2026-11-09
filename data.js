@@ -2,6 +2,8 @@ window.PORTFOLIO_DATA={
   "cinema": [
     {
       "id": "gamestore",
+      "roleAr": "الفكرة والإخراج والإنتاج بالـAI والمونتاج ضمن أوراكشن.",
+      "roleEn": "Concept, AI direction, production and editing through ORAKTION.",
       "ig": "DfXaj-EtiKb",
       "ar": "GAMESTORE — بعد الإغلاق",
       "en": "GAMESTORE — After Closing",
@@ -134,6 +136,8 @@ window.PORTFOLIO_DATA={
     },
     {
       "id": "ayat-magic",
+      "roleAr": "تطوير المعالجة الإبداعية والإنتاج بالـAI والمونتاج لإعلان آيات اليحيى.",
+      "roleEn": "Creative treatment, AI production and editing for Ayat Al Yahya’s advertisement.",
       "ar": "آيات اليحيى — لمسة من السحر",
       "en": "Ayat Al Yahya — A Touch of Magic",
       "type": "ad",
@@ -320,6 +324,7 @@ window.PORTFOLIO_DATA={
   "voice": [
     {
       "id": "joker",
+      "performanceCategory": "cartoon",
       "ar": "الجوكر — إلى جانب فؤاد شمص",
       "en": "The Joker — alongside Fouad Shamas",
       "descriptionAr": "أؤدي شخصية الجوكر أمام باتمان بصوت فؤاد شمص، في مشهد من Batman: The Killing Joke.",
@@ -349,6 +354,7 @@ window.PORTFOLIO_DATA={
     },
     {
       "id": "new-year",
+      "performanceCategory": "voiceover",
       "ar": "رأس السنة — السهم القرمزي",
       "en": "New Year — Scarlet Arrow",
       "descriptionAr": "مشاركة صوتية في مقطع الاحتفال برأس السنة، مع التصميم والإخراج.",
@@ -377,6 +383,7 @@ window.PORTFOLIO_DATA={
     },
     {
       "id": "metal-gear",
+      "performanceCategory": "games",
       "ar": "ميتل قير سوليد دلتا — سنيك إيتر",
       "en": "Metal Gear Solid Delta — Snake Eater",
       "descriptionAr": "أداء صوتي ضمن دبلجة فريق السهم القرمزي بالعربية الفصحى لمشهد من Metal Gear Solid Delta: Snake Eater.",
@@ -406,6 +413,7 @@ window.PORTFOLIO_DATA={
     },
     {
       "id": "wallace",
+      "performanceCategory": "live",
       "ar": "ويليام والاس — القلب الشجاع",
       "en": "William Wallace — Braveheart",
       "descriptionAr": "أداء ويليام والاس بالعربية الفصحى في مشهد من فيلم القلب الشجاع.",
@@ -434,6 +442,7 @@ window.PORTFOLIO_DATA={
     },
     {
       "id": "smurfs",
+      "performanceCategory": "cartoon",
       "ar": "السنافر — شرشبيل وهلهول",
       "en": "The Smurfs — Gargamel & Azrael",
       "descriptionAr": "أؤدي شرشبيل وهلهول في المشهد نفسه، بصوتين وطريقتين في التعبير.",
@@ -462,6 +471,7 @@ window.PORTFOLIO_DATA={
     },
     {
       "id": "evangelion",
+      "performanceCategory": "anime",
       "ar": "إيفانجيليون — ثلاث شخصيات",
       "en": "Evangelion — three characters",
       "descriptionAr": "أؤدي شينجي إيكاري وجيندو إيكاري وفيوتسكي في مشهد مدبلج بالعربية.",
@@ -490,6 +500,7 @@ window.PORTFOLIO_DATA={
     },
     {
       "id": "pocahontas",
+      "performanceCategory": "cartoon",
       "ar": "بوكاهانتس — جون سميث",
       "en": "Pocahontas — John Smith",
       "descriptionAr": "أداء شخصية جون سميث أمام بوكاهانتس بصوت سينسي، في مشهد مدبلج بالعربية.",
@@ -518,6 +529,7 @@ window.PORTFOLIO_DATA={
     },
     {
       "id": "eren",
+      "performanceCategory": "anime",
       "ar": "إيرين ييغر",
       "en": "Eren Yeager",
       "descriptionAr": "أداء شخصية إيرين ييغر في حوار مع فالكو، من هجوم العمالقة.",
