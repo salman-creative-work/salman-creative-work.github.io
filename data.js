@@ -369,18 +369,6 @@ window.PORTFOLIO_DATA={
       "image": "assets/M-D58lPRVIU.jpg",
       "actionAr": "شاهد العمل",
       "actionEn": "Watch the story"
-    },
-    {
-      "category": "story",
-      "ar": "خدعة إيسياما الأخيرة… النهاية ستتغير!",
-      "en": "Isayama’s final trick: will the ending change?",
-      "label": "SENPAI / ATTACK ON TITAN",
-      "descriptionAr": "تحليل ونظريات حول هجوم العمالقة، منشور على قناتي «سينباي». كتابة وتقديم بالعربية الفصحى.",
-      "descriptionEn": "Attack on Titan analysis and theories, published on my Senpai channel. Written and presented in Modern Standard Arabic.",
-      "url": "https://www.youtube.com/watch?v=yytbuoIaRCs",
-      "image": "assets/yytbuoIaRCs.jpg",
-      "actionAr": "شاهد التحليل على يوتيوب",
-      "actionEn": "Watch the analysis"
     }
   ]
 };
