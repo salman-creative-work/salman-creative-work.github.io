@@ -17,7 +17,7 @@
   const localAsset = value => typeof value === 'string' && /^assets\/[\w./-]+$/.test(value) ? '../' + value : '';
   const field = (item,key) => item?.[key+(state.lang === 'ar' ? 'Ar' : 'En')] || '';
   const sourceTitle = item => item?.[state.lang] || item?.en || item?.ar || '';
-  const libraryLink = anchor => '../' + (state.lang === 'en' ? '?lang=en' : '') + '#' + anchor;
+  const libraryLink = anchor => '../work.html' + (state.lang === 'en' ? '?lang=en' : '') + '#' + anchor;
   const whatsapp = text => 'https://wa.me/96569975288?text=' + encodeURIComponent(text);
   const button = (text,attr,primary=false) => `<button type="button" ${attr} class="${primary?'vs-primary':''}">${esc(text)}</button>`;
   const link = (text,url,primary=false) => `<a class="vs-action-link ${primary?'vs-primary':''}" href="${esc(url)}"${/^https?:/.test(url)?' target="_blank" rel="noopener noreferrer"':''}>${esc(text)}</a>`;
