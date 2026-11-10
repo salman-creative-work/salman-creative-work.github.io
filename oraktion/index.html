@@ -117,6 +117,12 @@ form.brief select,form.brief textarea{width:100%;min-height:48px;padding:10px 12
 form.brief textarea{min-height:110px;resize:vertical}
 footer{border-top:1px solid var(--line);padding:30px 0 40px;color:#8f84a0;font-size:13px}
 footer .shell{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.sectors{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.sector{display:flex;flex-direction:column;gap:8px;padding:24px;border-radius:12px;background:var(--panel);border:1px solid var(--line);text-decoration:none;transition:border-color .2s,transform .2s}
+.sector:hover{border-color:#65d9ee88;transform:translateY(-2px)}
+.sector .ico{font-size:28px}.sector h3{font-size:18px}.sector p{margin:0;color:var(--muted);font-size:14px;flex:1}.sector .go{color:var(--cyan);font-size:14px;margin-top:6px}
+@media(max-width:1000px){.sectors{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.sectors{grid-template-columns:1fr}}
 /* modal */
 .modal{position:fixed;inset:0;z-index:60;background:#000c;display:none;align-items:center;justify-content:center;padding:20px}
 .modal.open{display:flex}
@@ -158,6 +164,7 @@ footer .shell{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap
    <a href="#work" data-ar="أعمالنا" data-en="Our work">أعمالنا</a>
    <a href="#services" data-ar="خدماتنا" data-en="Services">خدماتنا</a>
    <a href="#packages" class="hl" data-ar="دعنا نصنع محتواك" data-en="Let us create your content">دعنا نصنع محتواك</a>
+   <a href="#sectors" data-ar="حلول حسب القطاع" data-en="By sector">حلول حسب القطاع</a>
    <a href="#vision" data-ar="رؤيتنا" data-en="Our vision">رؤيتنا</a>
    <a href="#contact" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a>
   </nav>
@@ -223,6 +230,12 @@ footer .shell{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap
  <h3 class="sub" data-ar="أفكار قنوات نصنعها لك" data-en="Channel ideas we can build for you">أفكار قنوات نصنعها لك</h3>
  <p class="hint" data-ar="اسحب لمشاهدة المزيد ←" data-en="Swipe to see more →">اسحب لمشاهدة المزيد ←</p>
  <div class="ideas" id="ideas"></div>
+</div></section>
+
+<section class="block" id="sectors"><div class="shell">
+ <div class="head"><div><p class="eyebrow" data-ar="حلول حسب القطاع" data-en="SOLUTIONS BY SECTOR">حلول حسب القطاع</p><h2 data-ar="عرض مصمم لمجالك." data-en="A presentation built for your field.">عرض مصمم لمجالك.</h2></div>
+ <p data-ar="اختر مجالك وشاهد ما نصنعه له: الخدمات والتصوير وأفكار المحتوى وطريقة العمل." data-en="Choose your field and see what we make for it: services, photography, content ideas and how we work.">اختر مجالك وشاهد ما نصنعه له: الخدمات والتصوير وأفكار المحتوى وطريقة العمل.</p></div>
+ <div class="sectors"><a class="sector" href="decks/clinics.html"><span class="ico">🏥</span><h3 data-ar="العيادات الطبية" data-en="Medical clinics">العيادات الطبية</h3><p data-ar="محتوى يبني ثقة المراجع قبل أن يحجز، ويلتزم بضوابط الإعلان الطبي." data-en="Content that earns patient trust before booking, within medical advertising rules.">محتوى يبني ثقة المراجع قبل أن يحجز، ويلتزم بضوابط الإعلان الطبي.</p><span class="go" data-ar="شاهد العرض ←" data-en="View the presentation →">شاهد العرض ←</span></a><a class="sector" href="decks/gyms.html"><span class="ico">🏋️</span><h3 data-ar="النوادي الرياضية" data-en="Gyms &amp; fitness">النوادي الرياضية</h3><p data-ar="محتوى يخاطب من لم يشترك بعد، ويحمل طاقة المكان والمدربين." data-en="Content that speaks to people who haven’t joined yet, with the energy of your space.">محتوى يخاطب من لم يشترك بعد، ويحمل طاقة المكان والمدربين.</p><span class="go" data-ar="شاهد العرض ←" data-en="View the presentation →">شاهد العرض ←</span></a><a class="sector" href="decks/makeup.html"><span class="ico">💄</span><h3 data-ar="خبيرات المكياج" data-en="Makeup artists">خبيرات المكياج</h3><p data-ar="تحولات حقيقية بمونتاج سينمائي، وإعلانات تجعل اسمكِ علامة." data-en="Real transformations with cinematic editing, and ads that turn your name into a brand.">تحولات حقيقية بمونتاج سينمائي، وإعلانات تجعل اسمكِ علامة.</p><span class="go" data-ar="شاهد العرض ←" data-en="View the presentation →">شاهد العرض ←</span></a><a class="sector" href="decks/institutes.html"><span class="ico">🎓</span><h3 data-ar="المعاهد ومراكز التدريب" data-en="Institutes &amp; training">المعاهد ومراكز التدريب</h3><p data-ar="فيديوهات تملأ مقاعد الدورات في كل موسم تسجيل." data-en="Videos that fill your courses every enrolment season.">فيديوهات تملأ مقاعد الدورات في كل موسم تسجيل.</p><span class="go" data-ar="شاهد العرض ←" data-en="View the presentation →">شاهد العرض ←</span></a></div>
 </div></section>
 
 <section class="block" id="process"><div class="shell">
