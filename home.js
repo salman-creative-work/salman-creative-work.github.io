@@ -88,7 +88,7 @@
       $(id)?.replaceChildren(...ids.map(key=>worksById.get(key)).filter(Boolean).map(w=>workCard(w,collection)));
     });
   }
-  function renderLanguage(){document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.title=tx('سلمان غازي الحسيني | السيرة المهنية ومعرض الأعمال — ORAKTION','Salman Ghazi Al Husseini | Professional Profile & Portfolio — ORAKTION');document.querySelectorAll('[data-ar][data-en]').forEach(e=>e.innerHTML=e.dataset[lang]);$('language').textContent=lang==='ar'?'EN':'ع';$('language').setAttribute('aria-label',tx('Switch to English','التبديل إلى العربية'));renderService();renderWorks();renderSamples();updateLinks();if(activeWork)renderFilm();}
+  function renderLanguage(){document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.title=tx('سلمان الحسيني | السيرة المهنية ومعرض الأعمال — ORAKTION','Salman Al Husseini | Professional Profile & Portfolio — ORAKTION');document.querySelectorAll('[data-ar][data-en]').forEach(e=>e.innerHTML=e.dataset[lang]);$('language').textContent=lang==='ar'?'EN':'ع';$('language').setAttribute('aria-label',tx('Switch to English','التبديل إلى العربية'));renderService();renderWorks();renderSamples();updateLinks();if(activeWork)renderFilm();}
   function persist(){const u=new URL(location.href);if(lang==='en')u.searchParams.set('lang','en');else u.searchParams.delete('lang');u.searchParams.set('route',route);history.replaceState(null,'',u.pathname+u.search+u.hash);}
   function clearFilmMedia(){
     const media=$('film-media');
