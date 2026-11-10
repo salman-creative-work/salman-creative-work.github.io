@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ORAKTION | أوراكشن — إعلانات سينمائية ومحتوى بالذكاء الاصطناعي</title>
+<meta name="description" content="أوراكشن استوديو إبداعي يصنع إعلانات سينمائية ومحتوى فيديو بالذكاء الاصطناعي، ويدير قنوات تيك توك ويوتيوب وإنستغرام لعملاء من كل مكان.">
+<meta property="og:title" content="ORAKTION | أوراكشن">
+<meta property="og:description" content="إعلانات سينمائية ومحتوى بالذكاء الاصطناعي من أفكار غير مألوفة.">
+<meta property="og:image" content="https://salman-creative-work.github.io/assets/oraktion-official-logo.jpg">
+<meta name="theme-color" content="#090713">
+<link rel="icon" href="../assets/favicon.svg">
+<style>
+@font-face{font-family:Arabic;src:url('../assets/NotoSansArabic.ttf') format('truetype');font-weight:100 900;font-display:swap}
+:root{--bg:#090713;--panel:#121020;--panel2:#171329;--paper:#f7f1fc;--muted:#b8aec8;--line:#ffffff1f;--violet:#bc80ff;--pink:#ed72d8;--cyan:#65d9ee;--grad:linear-gradient(110deg,#ed72d8,#a488ff 54%,#65d9ee)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--paper);font-family:Arabic,system-ui,sans-serif;line-height:1.75;-webkit-font-smoothing:antialiased}
+html[lang=en] body{font-family:system-ui,-apple-system,"Segoe UI",Inter,Arial,sans-serif}
+a{color:inherit}img{max-width:100%;height:auto;display:block}
+.shell{width:min(1180px,100% - 40px);margin-inline:auto}
+.eyebrow{margin:0 0 10px;font-size:13px;letter-spacing:.08em;color:var(--cyan)}
+h1,h2,h3{line-height:1.25;margin:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 22px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid #ffffff2e;cursor:pointer;background:transparent;color:var(--paper);font-family:inherit}
+.btn.primary{background:linear-gradient(135deg,#7e41b4,#2a8f8c);border:0;box-shadow:0 10px 30px #7e41b455}
+.btn:hover{filter:brightness(1.1)}
+/* header */
+.top{position:sticky;top:0;z-index:30;background:#090713e6;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .shell{display:flex;align-items:center;gap:18px;min-height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand img{width:40px;height:40px;border-radius:50%}
+.brand b{font-size:19px;letter-spacing:.32em;font-weight:700}
+.nav{display:flex;gap:4px;margin-inline-start:auto}
+.nav a{text-decoration:none;font-size:14px;padding:8px 12px;border-radius:8px;color:#ddd3ea}
+.nav a:hover{background:#ffffff10}
+.nav .hl{color:var(--cyan)}
+.lang,.menu{width:44px;height:44px;border-radius:50%;border:1px solid #ffffff2e;background:transparent;color:#fff;cursor:pointer;font-size:14px;font-family:inherit}
+.menu{display:none;font-size:20px}
+/* hero */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding:64px 0 56px}
+.hero h1{font-size:clamp(38px,5.4vw,66px);font-weight:800}
+.hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{font-size:18px;color:#d7cce6;margin:22px 0 30px;max-width:620px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.proof{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.proof span{font-size:13.5px;padding:7px 14px;border:1px solid var(--line);border-radius:30px;color:#d9cfe8;background:#ffffff08}
+.proof b{color:var(--cyan)}
+.poster{position:relative;border-radius:14px;overflow:hidden;border:1px solid #ffffff22;box-shadow:0 30px 80px #00000080;cursor:pointer;padding:0;background:none}
+.poster .play{position:absolute;inset-inline:16px;bottom:16px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:10px;background:#0d0913cc;backdrop-filter:blur(8px);font-size:14px;color:#fff;border:1px solid #ffffff2a}
+/* sections */
+section.block{padding:84px 0;border-top:1px solid var(--line)}
+.head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:34px}
+.head h2{font-size:clamp(30px,3.6vw,46px);font-weight:800}
+.head p{max-width:520px;color:var(--muted);margin:0}
+/* works */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.filters button{min-height:42px;padding:0 16px;border-radius:30px;border:1px solid var(--line);background:transparent;color:#ddd3ea;cursor:pointer;font-family:inherit;font-size:14px}
+.filters button[aria-pressed=true]{background:#ffffff14;border-color:#ffffff40;color:#fff}
+.works{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.work{position:relative;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--panel);cursor:pointer;text-align:start;padding:0;color:inherit;font-family:inherit}
+.pic{position:relative;aspect-ratio:4/5;overflow:hidden;display:block}
+.pic img{position:absolute;top:0;left:50%;width:calc(100% * var(--s,1.06));max-width:none;transform:translateX(-50%);transition:transform .4s}
+.work:hover .pic img{transform:translateX(-50%) scale(1.04);transform-origin:top}
+.work .cap{display:block;padding:12px 14px 14px}
+.work .cap small{display:block;font-size:12px;color:var(--cyan);margin-bottom:2px}
+.work .cap strong{font-size:15px}
+.work[hidden]{display:none}
+/* services */
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.svc article{padding:24px;border-radius:12px;background:var(--panel);border:1px solid var(--line)}
+.svc .ico{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:#ffffff0d;font-size:21px;margin-bottom:14px}
+.svc h3{font-size:18px;margin-bottom:8px}
+.svc p{margin:0;color:var(--muted);font-size:14.5px}
+/* compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.compare article{padding:26px;border-radius:12px;border:1px solid var(--line);background:var(--panel)}
+.compare .cine{border-color:#65d9ee66;background:linear-gradient(180deg,#7e41b426,#2a8f8c12)}
+.compare h3{font-size:21px;margin-bottom:4px}
+.compare .tag{font-size:13px;color:var(--muted);margin:0 0 14px}
+.compare ul,.pk ul{list-style:none;margin:0;padding:0}
+.compare li,.pk li{position:relative;padding-inline-start:18px;margin-bottom:8px;font-size:14.5px;color:#ddd0ea}
+.compare li:before,.pk li:before{content:'';position:absolute;inset-inline-start:0;top:10px;width:7px;height:7px;border-radius:50%;background:var(--violet)}
+.price{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;margin:0 0 14px;color:#cdbfdc;font-size:13px}
+.price b{font-size:32px;color:#fff;line-height:1}.price em{font-style:normal;color:var(--cyan);width:100%}
+/* packages */
+.pks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pk{display:flex;flex-direction:column;padding:24px;border-radius:12px;border:1px solid var(--line);background:var(--panel)}
+.pk.feat{border-color:#65d9ee88;background:linear-gradient(180deg,#7e41b42a,#2a8f8c14)}
+.pk h3{font-size:20px;margin-bottom:6px}.pk ul{flex:1;margin-bottom:18px}
+.flag{align-self:flex-start;font-size:12px;color:#0d0913;background:var(--cyan);border-radius:20px;padding:3px 10px;margin-bottom:10px}
+.wa-btn{display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:9px;border:1px solid #65d9ee80;color:var(--cyan);text-decoration:none;font-size:14.5px}
+.pk.feat .wa-btn{background:var(--cyan);color:#0d0913}
+.note{font-size:13px;color:#a99bb8;margin-top:18px;max-width:860px}
+.sub{font-size:21px;margin:44px 0 16px}
+/* ideas */
+.ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ideas article{padding:20px;border-radius:12px;background:#ffffff07;border:1px solid var(--line)}
+.ideas h3{font-size:16.5px;margin-bottom:6px}.ideas p{margin:0;font-size:14px;color:var(--muted)}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;counter-reset:s;list-style:none;padding:0;margin:0}
+.steps li{counter-increment:s;padding:20px;border-radius:12px;background:var(--panel);border:1px solid var(--line)}
+.steps li:before{content:counter(s,decimal-leading-zero);display:block;font-size:13px;color:var(--cyan);margin-bottom:8px;letter-spacing:.1em}
+.steps h3{font-size:16px;margin-bottom:6px}.steps p{margin:0;font-size:13.5px;color:var(--muted)}
+/* vision */
+.vm{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.vm article{padding:30px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}
+.vm h3{font-size:14px;letter-spacing:.08em;color:var(--cyan);margin-bottom:10px}
+.vm p{margin:0;font-size:19px;line-height:1.85}
+.values{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.values span{padding:10px 18px;border-radius:30px;border:1px solid var(--line);background:#ffffff08;font-size:14.5px}
+/* contact */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.contact h2{font-size:clamp(30px,3.6vw,46px);font-weight:800;margin-bottom:14px}
+.contact p{color:var(--muted)}
+form.brief{display:grid;gap:12px;padding:24px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}
+form.brief label{font-size:13.5px;color:#d7cce6}
+form.brief select,form.brief textarea{width:100%;min-height:48px;padding:10px 12px;border-radius:9px;border:1px solid #ffffff2e;background:#0d0a18;color:#fff;font-family:inherit;font-size:15px}
+form.brief textarea{min-height:110px;resize:vertical}
+footer{border-top:1px solid var(--line);padding:30px 0 40px;color:#8f84a0;font-size:13px}
+footer .shell{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+/* modal */
+.modal{position:fixed;inset:0;z-index:60;background:#000c;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.modal video{max-height:86vh;max-width:min(520px,100%);border-radius:12px;background:#000}
+.modal .x{position:absolute;top:16px;inset-inline-end:16px;width:46px;height:46px;border-radius:50%;border:1px solid #ffffff40;background:#0008;color:#fff;font-size:20px;cursor:pointer}
+.mbar{display:none}
+.hint{display:none}
+/* responsive */
+@media(max-width:1000px){.works{grid-template-columns:repeat(3,1fr)}.steps{grid-template-columns:repeat(3,1fr)}.hero{grid-template-columns:1fr;gap:34px}.poster{max-width:420px}}
+@media(max-width:760px){
+ html{scroll-padding-top:64px}body{padding-bottom:78px}
+ .top .shell{min-height:60px}.brand b{font-size:16px}
+ .menu{display:inline-block;margin-inline-start:auto}
+ .nav{display:none;position:absolute;top:60px;inset-inline:12px;flex-direction:column;padding:8px;border-radius:12px;background:#140e1ff7;border:1px solid #3d2b4c;box-shadow:0 18px 40px #0009}
+ .top.open .nav{display:flex}.nav a{min-height:46px;display:flex;align-items:center;font-size:15px}
+ .hero{padding:34px 0 40px}.hero .lead{font-size:16px}
+ .cta .btn{flex:1 1 100%}
+ section.block{padding:56px 0}.head{flex-direction:column;align-items:start;gap:10px;margin-bottom:22px}
+ .works{grid-template-columns:repeat(2,1fr);gap:10px}.work .cap{padding:10px}.work .cap strong{font-size:13.5px}
+ .svc,.compare,.vm,.contact{grid-template-columns:1fr}
+ .steps{grid-template-columns:1fr}
+ .pks,.ideas{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-inline:-20px;padding:4px 20px 10px;scrollbar-width:none}
+ .pks::-webkit-scrollbar,.ideas::-webkit-scrollbar{display:none}
+ .pks>*{flex:0 0 84%;scroll-snap-align:start}.ideas>*{flex:0 0 78%;scroll-snap-align:start}
+ .hint{display:block;font-size:13px;color:#a99bb8;margin:-6px 0 8px}
+ .vm p{font-size:17px}
+ .mbar{display:grid;grid-template-columns:auto 1fr;gap:8px;position:fixed;inset-inline:0;bottom:0;z-index:50;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#0d0913f2;border-top:1px solid #3d2b4c;backdrop-filter:blur(14px)}
+ .mbar a{min-height:48px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-weight:600;text-decoration:none;font-size:15px}
+ .mbar .w{padding:0 16px;border:1px solid #2fbf71;color:#5fe39a}.mbar .c{background:linear-gradient(135deg,#7e41b4,#2a8f8c);color:#fff}
+}
+</style>
+</head>
+<body>
+<header class="top" id="top">
+ <div class="shell">
+  <a class="brand" href="#top"><img src="../assets/oraktion-official-logo.jpg" alt="ORAKTION"><b dir="ltr">ORAKTION</b></a>
+  <button class="menu" type="button" aria-expanded="false" data-label-ar="القائمة" data-label-en="Menu">☰</button>
+  <nav class="nav">
+   <a href="#work" data-ar="أعمالنا" data-en="Our work">أعمالنا</a>
+   <a href="#services" data-ar="خدماتنا" data-en="Services">خدماتنا</a>
+   <a href="#packages" class="hl" data-ar="دعنا نصنع محتواك" data-en="Let us create your content">دعنا نصنع محتواك</a>
+   <a href="#vision" data-ar="رؤيتنا" data-en="Our vision">رؤيتنا</a>
+   <a href="#contact" data-ar="تواصل معنا" data-en="Contact">تواصل معنا</a>
+  </nav>
+  <button class="lang" type="button" id="lang">EN</button>
+ </div>
+</header>
+
+<main>
+<section class="shell hero">
+ <div>
+  <p class="eyebrow" data-ar="ORAKTION · استوديو إعلانات ومحتوى بالذكاء الاصطناعي" data-en="ORAKTION · AI ADVERTISING &amp; CONTENT STUDIO">ORAKTION · استوديو إعلانات ومحتوى بالذكاء الاصطناعي</p>
+  <h1 data-ar="نحوّل الفكرة غير المألوفة إلى &lt;em&gt;إعلان لا يُنسى.&lt;/em&gt;" data-en="We turn unexpected ideas into &lt;em&gt;ads people remember.&lt;/em&gt;">نحوّل الفكرة غير المألوفة إلى <em>إعلان لا يُنسى.</em></h1>
+  <p class="lead" data-ar="أوراكشن استوديو إبداعي يصنع إعلانات سينمائية وحكايات متحركة ومحتوى للمنصات بالذكاء الاصطناعي، بصوت بشري حقيقي وفكرة تُبنى لعلامتك وحدها. ونخدم عملاء من كل مكان." data-en="ORAKTION is a creative studio making cinematic ads, animated stories and platform content with AI, with real human voices and ideas built for your brand alone. We work with clients worldwide.">أوراكشن استوديو إبداعي يصنع إعلانات سينمائية وحكايات متحركة ومحتوى للمنصات بالذكاء الاصطناعي، بصوت بشري حقيقي وفكرة تُبنى لعلامتك وحدها. ونخدم عملاء من كل مكان.</p>
+  <div class="cta">
+   <a class="btn primary" href="#packages" data-ar="دعنا نصنع محتواك ✦" data-en="Let us create your content ✦">دعنا نصنع محتواك ✦</a>
+   <a class="btn" href="#work" data-ar="شاهد أعمالنا" data-en="See our work">شاهد أعمالنا</a>
+  </div>
+  <div class="proof">
+   <span data-ar="&lt;b&gt;10 آلاف&lt;/b&gt; مشاهدة لإعلان GAMESTORE في أول 5 أيام" data-en="&lt;b&gt;10K&lt;/b&gt; views for the GAMESTORE ad in its first 5 days"><b>10 آلاف</b> مشاهدة لإعلان GAMESTORE في أول 5 أيام</span>
+   <span data-ar="إعلانات · حكايات · تريلرات · صوت" data-en="Ads · Stories · Trailers · Voice">إعلانات · حكايات · تريلرات · صوت</span>
+  </div>
+ </div>
+ <button class="poster" type="button" data-video="../assets/oraktion-gamestore.mp4" aria-label="GAMESTORE">
+  <span class="pic" style="--s:1.0627"><img src="../assets/covers-20261110/gamestore.webp" alt="GAMESTORE — بعد الإغلاق" width="800" height="1000" fetchpriority="high"></span>
+  <span class="play" data-ar="▶ شاهد إعلان GAMESTORE" data-en="▶ Watch the GAMESTORE ad">▶ شاهد إعلان GAMESTORE</span>
+ </button>
+</section>
+
+<section class="block" id="work"><div class="shell">
+ <div class="head"><div><p class="eyebrow" data-ar="من أعمالنا" data-en="SELECTED WORK">من أعمالنا</p><h2 data-ar="أفكار صارت أفلامًا." data-en="Ideas that became films.">أفكار صارت أفلامًا.</h2></div>
+ <p data-ar="إعلانات لعلامات حقيقية، وحكايات وتريلرات من عوالم أوراكشن. اضغط على أي عمل لمشاهدته." data-en="Ads for real brands, plus stories and trailers from ORAKTION's worlds. Tap any work to watch it.">إعلانات لعلامات حقيقية، وحكايات وتريلرات من عوالم أوراكشن. اضغط على أي عمل لمشاهدته.</p></div>
+ <div class="filters" role="group">
+  <button type="button" aria-pressed="true" data-f="all" data-ar="الكل" data-en="All">الكل</button>
+  <button type="button" aria-pressed="false" data-f="ad" data-ar="إعلانات" data-en="Ads">إعلانات</button>
+  <button type="button" aria-pressed="false" data-f="story" data-ar="حكايات" data-en="Stories">حكايات</button>
+  <button type="button" aria-pressed="false" data-f="trailer" data-ar="تريلرات" data-en="Trailers">تريلرات</button>
+ </div>
+ <div class="works" id="works"></div>
+</div></section>
+
+<section class="block" id="services"><div class="shell">
+ <div class="head"><div><p class="eyebrow" data-ar="خدماتنا" data-en="SERVICES">خدماتنا</p><h2 data-ar="ما نصنعه لك." data-en="What we make for you.">ما نصنعه لك.</h2></div>
+ <p data-ar="من فكرة واحدة حتى قناة كاملة: نكتب، ونُخرج، وننتج بالذكاء الاصطناعي، ونضع الصوت والموسيقى." data-en="From a single idea to a whole channel: we write, direct, produce with AI, and add voice and music.">من فكرة واحدة حتى قناة كاملة: نكتب، ونُخرج، وننتج بالذكاء الاصطناعي، ونضع الصوت والموسيقى.</p></div>
+ <div class="svc">
+  <article><div class="ico">⚡</div><h3 data-ar="إعلان قصير" data-en="Standard ad">إعلان قصير</h3><p data-ar="فيديو حتى 30 ثانية لخدمة أو منتج أو عرض، سريع وواضح ومناسب للمنصات." data-en="Up to 30 seconds for a service, product or offer: fast, clear and made for social platforms.">فيديو حتى 30 ثانية لخدمة أو منتج أو عرض، سريع وواضح ومناسب للمنصات.</p></article>
+  <article><div class="ico">🎬</div><h3 data-ar="إعلان سينمائي" data-en="Cinematic ad">إعلان سينمائي</h3><p data-ar="حكاية أصلية لعلامتك بشخصيات وعالم ولوحة قصة وصوت بشري وموسيقى خاصة." data-en="An original story for your brand, with characters, a world, a storyboard, a human voice and an original score.">حكاية أصلية لعلامتك بشخصيات وعالم ولوحة قصة وصوت بشري وموسيقى خاصة.</p></article>
+  <article><div class="ico">✨</div><h3 data-ar="حلقات وقصص متحركة" data-en="Animated episodes">حلقات وقصص متحركة</h3><p data-ar="كرتون وأنمي وحكايات للأطفال والعائلة، بشخصيات ثابتة الملامح من حلقة لأخرى." data-en="Cartoon, anime and family stories with characters that stay consistent across episodes.">كرتون وأنمي وحكايات للأطفال والعائلة، بشخصيات ثابتة الملامح من حلقة لأخرى.</p></article>
+  <article><div class="ico">📱</div><h3 data-ar="إدارة القنوات" data-en="Channel management">إدارة القنوات</h3><p data-ar="ندير قناتك على تيك توك أو يوتيوب أو إنستغرام ونصنع محتواها كاملًا، مع تقرير شهري." data-en="We run your TikTok, YouTube or Instagram channel and create all of its content, with a monthly report.">ندير قناتك على تيك توك أو يوتيوب أو إنستغرام ونصنع محتواها كاملًا، مع تقرير شهري.</p></article>
+  <article><div class="ico">🎙</div><h3 data-ar="تعليق صوتي ودوبلاج" data-en="Voice-over &amp; dubbing">تعليق صوتي ودوبلاج</h3><p data-ar="أداء صوتي بشري بالفصحى وباللهجات للإعلانات والحكايات والشخصيات." data-en="Human voice performance in Modern Standard Arabic and dialects for ads, stories and characters.">أداء صوتي بشري بالفصحى وباللهجات للإعلانات والحكايات والشخصيات.</p></article>
+  <article><div class="ico">🏥</div><h3 data-ar="للعيادات والمعاهد" data-en="For clinics &amp; institutes">للعيادات والمعاهد</h3><p data-ar="فيديوهات توعوية وتعريفية وإعلانات تسجيل، تلتزم بضوابط الإعلان الطبي وتشرح الخدمة بوضوح." data-en="Awareness, introduction and enrollment videos that follow medical advertising rules and explain the service clearly.">فيديوهات توعوية وتعريفية وإعلانات تسجيل، تلتزم بضوابط الإعلان الطبي وتشرح الخدمة بوضوح.</p></article>
+ </div>
+</div></section>
+
+<section class="block" id="packages"><div class="shell">
+ <div class="head"><div><p class="eyebrow" data-ar="الباقات · لعملاء من كل مكان" data-en="PACKAGES · CLIENTS WORLDWIDE">الباقات · لعملاء من كل مكان</p><h2 data-ar="دعنا نصنع محتواك." data-en="Let us create your content.">دعنا نصنع محتواك.</h2></div>
+ <p data-ar="ندير قناتك ونصنع محتواها كاملًا: الفكرة والكتابة والإنتاج والصوت والمونتاج والنشر، مع تقرير شهري بالنتائج." data-en="We run your channel and create all of its content: idea, writing, production, voice, editing and posting, with a monthly results report.">ندير قناتك ونصنع محتواها كاملًا: الفكرة والكتابة والإنتاج والصوت والمونتاج والنشر، مع تقرير شهري بالنتائج.</p></div>
+ <h3 class="sub" style="margin-top:0" data-ar="باقات شهرية" data-en="Monthly plans">باقات شهرية</h3>
+ <p class="hint" data-ar="اسحب لمشاهدة المزيد ←" data-en="Swipe to see more →">اسحب لمشاهدة المزيد ←</p>
+ <div class="pks" id="plans"></div>
+ <h3 class="sub" data-ar="إعلان عادي أم سينمائي؟" data-en="Standard or cinematic ad?">إعلان عادي أم سينمائي؟</h3>
+ <div class="compare" id="adtiers"></div>
+ <p class="note" data-ar="الأسعار نقطة بداية، ويتحدد السعر النهائي بعد معرفة التفاصيل والمدة. ميزانية الإعلانات الممولة غير مشمولة. نوصي بالتزام ثلاثة أشهر للباقات الشهرية. الدينار الكويتي تقريبي." data-en="Prices are starting points; the final quote follows your brief and length. Paid ad budgets are not included. We recommend a three-month commitment for monthly plans. KWD is approximate.">الأسعار نقطة بداية، ويتحدد السعر النهائي بعد معرفة التفاصيل والمدة. ميزانية الإعلانات الممولة غير مشمولة. نوصي بالتزام ثلاثة أشهر للباقات الشهرية. الدينار الكويتي تقريبي.</p>
+ <h3 class="sub" data-ar="أفكار قنوات نصنعها لك" data-en="Channel ideas we can build for you">أفكار قنوات نصنعها لك</h3>
+ <p class="hint" data-ar="اسحب لمشاهدة المزيد ←" data-en="Swipe to see more →">اسحب لمشاهدة المزيد ←</p>
+ <div class="ideas" id="ideas"></div>
+</div></section>
+
+<section class="block" id="process"><div class="shell">
+ <div class="head"><div><p class="eyebrow" data-ar="طريقة عملنا" data-en="HOW WE WORK">طريقة عملنا</p><h2 data-ar="من الفكرة إلى النشر." data-en="From idea to launch.">من الفكرة إلى النشر.</h2></div></div>
+ <ol class="steps">
+  <li><h3 data-ar="نسمعك" data-en="We listen">نسمعك</h3><p data-ar="تخبرنا بنشاطك وهدفك وجمهورك والموعد." data-en="You tell us about your business, goal, audience and deadline.">تخبرنا بنشاطك وهدفك وجمهورك والموعد.</p></li>
+  <li><h3 data-ar="نقترح" data-en="We propose">نقترح</h3><p data-ar="نرسل لك الفكرة وعرضًا واضحًا بالسعر والمدة." data-en="We send you the concept and a clear offer with price and timeline.">نرسل لك الفكرة وعرضًا واضحًا بالسعر والمدة.</p></li>
+  <li><h3 data-ar="نكتب ونرسم" data-en="We script">نكتب ونرسم</h3><p data-ar="النص ولوحة القصة والشخصيات قبل الإنتاج." data-en="Script, storyboard and characters before production.">النص ولوحة القصة والشخصيات قبل الإنتاج.</p></li>
+  <li><h3 data-ar="ننتج" data-en="We produce">ننتج</h3><p data-ar="الصورة والحركة والصوت والموسيقى، مع جولات تعديل." data-en="Image, motion, voice and music, with revision rounds.">الصورة والحركة والصوت والموسيقى، مع جولات تعديل.</p></li>
+  <li><h3 data-ar="نسلّم وننشر" data-en="We deliver">نسلّم وننشر</h3><p data-ar="بالمقاسات المطلوبة لكل منصة، وننشر إن كنت ضمن باقة شهرية." data-en="In the right format for each platform, and we post it if you're on a monthly plan.">بالمقاسات المطلوبة لكل منصة، وننشر إن كنت ضمن باقة شهرية.</p></li>
+ </ol>
+</div></section>
+
+<section class="block" id="vision"><div class="shell">
+ <div class="head"><div><p class="eyebrow" data-ar="من نحن" data-en="WHO WE ARE">من نحن</p><h2 data-ar="رؤيتنا ورسالتنا." data-en="Our vision and mission.">رؤيتنا ورسالتنا.</h2></div></div>
+ <div class="vm">
+  <article><h3 data-ar="الرؤية" data-en="VISION">الرؤية</h3><p data-ar="أن تكون أوراكشن العنوان العربي الأول للإعلان السينمائي المصنوع بالذكاء الاصطناعي، حيث تتحول كل فكرة غير مألوفة إلى قصة يتذكرها الناس." data-en="To be the leading Arabic name in AI-made cinematic advertising, where every unexpected idea becomes a story people remember.">أن تكون أوراكشن العنوان العربي الأول للإعلان السينمائي المصنوع بالذكاء الاصطناعي، حيث تتحول كل فكرة غير مألوفة إلى قصة يتذكرها الناس.</p></article>
+  <article><h3 data-ar="الرسالة" data-en="MISSION">الرسالة</h3><p data-ar="نساعد العلامات التجارية وصنّاع المحتوى على أن يُرَوا ويُسمَعوا، بمحتوى يجمع الحكاية العربية والصوت البشري وأحدث أدوات الذكاء الاصطناعي، بجودة سينمائية وسرعة تناسب عصر المنصات." data-en="We help brands and creators be seen and heard, with content that combines Arabic storytelling, human voice and the latest AI tools, at cinematic quality and platform speed.">نساعد العلامات التجارية وصنّاع المحتوى على أن يُرَوا ويُسمَعوا، بمحتوى يجمع الحكاية العربية والصوت البشري وأحدث أدوات الذكاء الاصطناعي، بجودة سينمائية وسرعة تناسب عصر المنصات.</p></article>
+ </div>
+ <div class="values">
+  <span data-ar="✦ الفكرة أولًا" data-en="✦ Idea first">✦ الفكرة أولًا</span>
+  <span data-ar="✦ صوت بشري حقيقي" data-en="✦ A real human voice">✦ صوت بشري حقيقي</span>
+  <span data-ar="✦ أرقام صادقة" data-en="✦ Honest numbers">✦ أرقام صادقة</span>
+  <span data-ar="✦ التزام بالموعد" data-en="✦ On time, every time">✦ التزام بالموعد</span>
+ </div>
+</div></section>
+
+<section class="block" id="contact"><div class="shell contact">
+ <div>
+  <p class="eyebrow" data-ar="تواصل معنا" data-en="CONTACT">تواصل معنا</p>
+  <h2 data-ar="لنبدأ بفكرتك." data-en="Let's start with your idea.">لنبدأ بفكرتك.</h2>
+  <p data-ar="اختر الخدمة واكتب لنا سطرين عن نشاطك والموعد، وتصلنا رسالتك على واتساب جاهزة. نرد عليك بفكرة وعرض واضح." data-en="Choose a service and write two lines about your business and deadline; your message reaches us on WhatsApp, ready to go. We'll reply with an idea and a clear offer.">اختر الخدمة واكتب لنا سطرين عن نشاطك والموعد، وتصلنا رسالتك على واتساب جاهزة. نرد عليك بفكرة وعرض واضح.</p>
+  <a class="btn primary" id="wa-direct" href="https://wa.me/96569975288" target="_blank" rel="noopener" data-ar="راسلنا على واتساب ↗" data-en="Message us on WhatsApp ↗">راسلنا على واتساب ↗</a>
+ </div>
+ <form class="brief" id="brief">
+  <label for="svc" data-ar="الخدمة" data-en="Service">الخدمة</label>
+  <select id="svc"></select>
+  <label for="msg" data-ar="نشاطك والموعد المطلوب" data-en="Your business and deadline">نشاطك والموعد المطلوب</label>
+  <textarea id="msg"></textarea>
+  <button class="btn primary" type="submit" data-ar="أرسل عبر واتساب ↗" data-en="Send via WhatsApp ↗">أرسل عبر واتساب ↗</button>
+ </form>
+</div></section>
+</main>
+
+<footer><div class="shell"><span dir="ltr">© ORAKTION</span><span data-ar="إعلانات سينمائية ومحتوى بالذكاء الاصطناعي" data-en="Cinematic AI ads &amp; content">إعلانات سينمائية ومحتوى بالذكاء الاصطناعي</span></div></footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true"><button class="x" type="button" aria-label="Close">✕</button><video id="mv" controls playsinline preload="none"></video></div>
+<div class="mbar"><a class="w" id="mb-w" href="https://wa.me/96569975288" target="_blank" rel="noopener">واتساب</a><a class="c" id="mb-c" href="#packages">دعنا نصنع محتواك ✦</a></div>
+
+<script>
+(function(){
+const WA='96569975288';
+const YC={"gamestore": 941, "cinderella": 942, "violet": 929, "noor": 944, "hakawati": 935, "ayat-magic": 930, "qamar": 940, "alice": 925, "narrator": 927, "last-signal": 936, "moses": 921, "three-kingdoms": 911};
+const works=[
+ {id:'gamestore',t:'ad',ar:'GAMESTORE — بعد الإغلاق',en:'GAMESTORE — After Closing',kar:'فيلم إعلاني لمتجر ألعاب',ken:'Gaming retail brand film',v:'gamestore'},
+ {id:'cinderella',t:'ad',ar:'سندريلا بلمسة لوما',en:'Cinderella with Luma',kar:'إعلان لخبيرة تجميل',ken:'Makeup artist ad',v:'cinderella'},
+ {id:'violet',t:'ad',ar:'Violet Velvet — تفاصيل تُرى',en:'Violet Velvet — Details in Focus',kar:'فيلم أزياء ومنتجات',ken:'Fashion & product film',v:'violet'},
+ {id:'ayat-magic',t:'ad',ar:'لمسة من السحر',en:'A Touch of Magic',kar:'إعلان لخبيرة تجميل',ken:'Makeup artist ad',v:'ayat-magic'},
+ {id:'hakawati',t:'ad',ar:'الحكواتي الصغير',en:'The Little Storyteller',kar:'إعلان قصصي للأطفال والعائلة',ken:'Children & family story ad',v:'hakawati'},
+ {id:'qamar',t:'ad',ar:'قمر الزمان',en:'Qamar Al Zaman',kar:'نموذج إعلان لعيادة أسنان',ken:'Dental clinic ad concept',v:'qamar'},
+ {id:'noor',t:'story',ar:'فوازير فوزية',en:"Fawzia's Riddles",kar:'حكاية رمضانية بشخصيات متحركة',ken:'Animated Ramadan story',v:'noor'},
+ {id:'narrator',t:'story',ar:'حين كذب الراوي',en:'When the Narrator Lied',kar:'فيلم فانتازيا قصير',ken:'Fantasy short film',v:'narrator'},
+ {id:'three-kingdoms',t:'story',ar:'رومانسية الممالك الثلاث',en:'Romance of the Three Kingdoms',kar:'معالجة ملحمية',ken:'Epic storytelling',ig:'Dc89LfAtJ-H'},
+ {id:'alice',t:'trailer',ar:'كوابيس أليس',en:"Alice's Nightmares",kar:'تريلر فانتازيا ورعب',ken:'Fantasy horror trailer',v:'alice'},
+ {id:'last-signal',t:'trailer',ar:'الإشارة الأخيرة',en:'The Last Signal',kar:'تريلر رعب سينمائي',ken:'Cinematic horror trailer',v:'last-signal'}
+];
+const plans=[
+ {ar:'انطلاقة',en:'Launch',usd:'700',kwd:'215',items:[['8 فيديوهات قصيرة شهريًا','8 short videos a month'],['خطة محتوى وكتابة النصوص','Content plan and scripts'],['النشر وكتابة الوصف والوسوم','Posting, captions and hashtags'],['تقرير شهري بالنتائج','Monthly results report']]},
+ {ar:'نمو',en:'Growth',usd:'1,200',kwd:'370',feat:['الأنسب للعلامات التجارية','Best for brands'],items:[['12 فيديو قصيرًا وقطعة سينمائية شهريًا','12 short videos plus one cinematic piece a month'],['صوت بشري لهوية مسموعة ثابتة','A human voice for a consistent sound'],['متابعة التعليقات الأساسية','Core comment management'],['تقرير شهري وتحسين الخطة','Monthly report and plan optimisation']]},
+ {ar:'قناة كاملة',en:'Full channel',usd:'2,000',kwd:'615',items:[['20 فيديو أو حلقة ضمن سلسلة','20 videos or episodes as a series'],['شخصيات وعالم خاص بقناتك','Characters and a world unique to your channel'],['إدارة كاملة للنشر والتفاعل','Full posting and community management'],['مراجعة شهرية للأداء والاتجاه','Monthly performance and direction review']]}
+];
+const tiers=[
+ {ar:'إعلان قصير',en:'Standard ad',tar:'لفكرة جاهزة وتسليم سريع',ten:'For a ready idea and fast delivery',usd:'250',kwd:'75',items:[['حتى 30 ثانية لفكرة أو نص جاهز','Up to 30 seconds from your idea or script'],['لقطات بالذكاء الاصطناعي ونص على الشاشة','AI visuals with on-screen text'],['صوت مولّد أو موسيقى مرخّصة','AI voice or licensed music'],['مقاس واحد وجولة تعديل واحدة','One format, one revision round'],['التسليم خلال 3 إلى 5 أيام','Delivered in 3–5 days']]},
+ {ar:'إعلان سينمائي',en:'Cinematic ad',tar:'حكاية أصلية تبقى في الذاكرة',ten:'An original story that stays with people',usd:'900',kwd:'275',cine:1,items:[['من 30 إلى 60 ثانية بحكاية أصلية لعلامتك','30–60 seconds built on an original story'],['تصميم الشخصيات والعالم ولوحة القصة','Characters, world and storyboard'],['صوت بشري حقيقي','A real human voice'],['تصميم صوت وموسيقى خاصة بالعمل','Sound design and an original score'],['مقاسان وجولتا تعديل · من 7 إلى 14 يومًا','Two formats, two revisions · 7–14 days']]}
+];
+const ideas=[
+ ['حكايات قبل النوم بالفصحى','Arabic bedtime stories','قصص أصلية للأطفال بصوت بشري دافئ، لسوق يحتاج محتوى عربيًا أكثر.','Original children’s stories in a warm human voice, for a market that needs more Arabic content.'],
+ ['حكايات الحيوانات في القرآن','Animals of the Quran','قصص للأطفال بالسرد والمناظر والحيوانات، دون تصوير الأنبياء أو الملائكة، مع مراجعة شرعية للنص.','Children’s stories told through narration, landscapes and animals, with no depiction of prophets or angels and a scholarly review of the script.'],
+ ['كليلة ودمنة من جديد','Kalila wa Dimna, reimagined','حكايات الحكمة العربية بإخراج سينمائي وأصوات تمثيلية لكل شخصية.','Classic Arabic fables with cinematic direction and a voice for every character.'],
+ ['حكايات من الخليج القديم','Tales of the old Gulf','الغوص على اللؤلؤ والأسواق القديمة وحكايات جحا، بصورة سينمائية حديثة.','Pearl diving, old markets and Juha tales in a modern cinematic style.'],
+ ['تميمة علامتك','Your brand mascot','شخصية تمثل متجرك تعيش مغامرة قصيرة كل أسبوع، فيتعلق بها الجمهور.','A character for your brand with a short adventure every week, so the audience grows attached.'],
+ ['ملحمة عربية مسلسلة','A serialized Arabic saga','قصة فانتازيا بحلقات أسبوعية في عالم أصلي، للمراهقين والكبار.','A weekly fantasy series in an original world, for teens and adults.']
+];
+const services=[['إعلان قصير','Standard ad'],['إعلان سينمائي','Cinematic ad'],['حلقات وقصص متحركة','Animated episodes'],['إدارة قناة (باقة شهرية)','Channel management (monthly plan)'],['تعليق صوتي ودوبلاج','Voice-over & dubbing'],['محتوى لعيادة أو معهد','Content for a clinic or institute'],['شيء آخر','Something else']];
+const isEn=()=>document.documentElement.lang==='en';
+const T=(a,e)=>isEn()?e:a;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const waLink=t=>'https://wa.me/'+WA+'?text='+encodeURIComponent(t);
+function render(){
+ const W=document.getElementById('works');const f=(document.querySelector('.filters [aria-pressed=true]')||{}).dataset?.f||'all';
+ W.innerHTML=works.map(w=>`<button class="work" type="button" data-t="${w.t}" ${w.v?`data-video="../assets/oraktion-${w.v}.mp4"`:`data-ig="${w.ig}"`} ${f!=='all'&&f!==w.t?'hidden':''}><span class="pic" style="--s:${(1000/(YC[w.id]||940)).toFixed(4)}"><img src="../assets/covers-20261110/${w.id}.webp" alt="${esc(T(w.ar,w.en))}" loading="lazy" width="800" height="1000"></span><span class="cap"><small>${esc(T(w.kar,w.ken))}</small><strong>${esc(T(w.ar,w.en))}</strong></span></button>`).join('');
+ document.getElementById('plans').innerHTML=plans.map(p=>`<article class="pk${p.feat?' feat':''}">${p.feat?`<span class="flag">${T(...p.feat)}</span>`:''}<h3>${T(p.ar,p.en)}</h3><p class="price"><small>${T('يبدأ من','From')}</small><b dir="ltr">$${p.usd}</b><span>${T('شهريًا','per month')}</span><em>${T('≈ '+p.kwd+' د.ك','≈ KWD '+p.kwd)}</em></p><ul>${p.items.map(i=>`<li>${T(...i)}</li>`).join('')}</ul><a class="wa-btn" target="_blank" rel="noopener" href="${waLink(T('مرحبًا أوراكشن، أريد باقة «'+p.ar+'». حسابي أو نشاطي: ','Hi ORAKTION, I am interested in the '+p.en+' plan. My account or business: '))}">${T('ابدأ بهذه الباقة ↗','Start with this plan ↗')}</a></article>`).join('');
+ document.getElementById('adtiers').innerHTML=tiers.map(p=>`<article class="${p.cine?'cine':''}"><h3>${T(p.ar,p.en)}</h3><p class="tag">${T(p.tar,p.ten)}</p><p class="price"><small>${T('يبدأ من','From')}</small><b dir="ltr">$${p.usd}</b><em>${T('≈ '+p.kwd+' د.ك','≈ KWD '+p.kwd)}</em></p><ul>${p.items.map(i=>`<li>${T(...i)}</li>`).join('')}</ul><a class="wa-btn" target="_blank" rel="noopener" href="${waLink(T('مرحبًا أوراكشن، أريد '+p.ar+'. نشاطي وفكرتي: ','Hi ORAKTION, I would like a '+p.en.toLowerCase()+'. My business and idea: '))}">${T('اطلب '+p.ar+' ↗','Request a '+p.en.toLowerCase()+' ↗')}</a></article>`).join('');
+ document.getElementById('ideas').innerHTML=ideas.map(i=>`<article><h3>${T(i[0],i[1])}</h3><p>${T(i[2],i[3])}</p></article>`).join('');
+ const sel=document.getElementById('svc');const cur=sel.selectedIndex;sel.innerHTML=services.map(s=>`<option>${T(...s)}</option>`).join('');if(cur>0)sel.selectedIndex=cur;
+ document.getElementById('msg').placeholder=T('مثال: عيادة أسنان في الكويت، نريد إعلانًا لخدمة التبييض قبل نهاية الشهر.','Example: a dental clinic in Kuwait; we need an ad for teeth whitening before the end of the month.');
+ document.querySelectorAll('[data-ar]').forEach(e=>e.innerHTML=T(e.dataset.ar,e.dataset.en));
+ document.getElementById('lang').textContent=isEn()?'ع':'EN';
+ const m=document.querySelector('.menu');m.setAttribute('aria-label',T(m.dataset.labelAr,m.dataset.labelEn));
+ document.getElementById('mb-w').textContent=T('واتساب','WhatsApp');document.getElementById('mb-c').textContent=T('دعنا نصنع محتواك ✦','Let us create your content ✦');
+ const g=T('مرحبًا أوراكشن، وصلت إليكم من موقعكم وأود التحدث عن: ','Hi ORAKTION, I found you through your website and would like to talk about: ');
+ document.getElementById('mb-w').href=waLink(g);document.getElementById('wa-direct').href=waLink(g);
+ document.title=T('ORAKTION | أوراكشن — إعلانات سينمائية ومحتوى بالذكاء الاصطناعي','ORAKTION — Cinematic AI ads & content');
+}
+function setLang(l){document.documentElement.lang=l;document.documentElement.dir=l==='en'?'ltr':'rtl';try{localStorage.setItem('ork-lang',l)}catch(e){}render();}
+document.getElementById('lang').addEventListener('click',()=>setLang(isEn()?'ar':'en'));
+document.querySelector('.filters').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));const f=b.dataset.f;document.querySelectorAll('.work').forEach(w=>w.hidden=f!=='all'&&w.dataset.t!==f);});
+const modal=document.getElementById('modal'),mv=document.getElementById('mv');
+const close=()=>{modal.classList.remove('open');mv.pause();mv.removeAttribute('src');mv.load();};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-video],[data-ig]');if(!b)return;if(b.dataset.ig){window.open('https://www.instagram.com/reel/'+b.dataset.ig+'/','_blank','noopener');return;}mv.src=b.dataset.video;modal.classList.add('open');mv.play().catch(()=>{});});
+modal.addEventListener('click',e=>{if(e.target===modal||e.target.closest('.x'))close();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))close();});
+const top=document.getElementById('top'),menu=document.querySelector('.menu');
+menu.addEventListener('click',e=>{e.stopPropagation();const o=top.classList.toggle('open');menu.setAttribute('aria-expanded',String(o));menu.textContent=o?'✕':'☰';});
+document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>{top.classList.remove('open');menu.textContent='☰';}));
+document.addEventListener('click',e=>{if(!top.contains(e.target)){top.classList.remove('open');menu.textContent='☰';}});
+document.getElementById('brief').addEventListener('submit',e=>{e.preventDefault();const s=document.getElementById('svc').value,m=document.getElementById('msg').value.trim();window.open(waLink(T('مرحبًا أوراكشن ✦\nالخدمة: ','Hi ORAKTION ✦\nService: ')+s+'\n'+T('التفاصيل: ','Details: ')+(m||'—')),'_blank','noopener');});
+let saved='ar';
+try{saved=localStorage.getItem('ork-lang')||((navigator.language||'ar').toLowerCase().startsWith('ar')?'ar':'en')}catch(e){saved='ar'}
+setLang(saved);
+})();
+</script>
+</body>
+</html>
