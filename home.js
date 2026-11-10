@@ -3,6 +3,7 @@
   const $=id=>document.getElementById(id);
   const params=new URLSearchParams(location.search);
   let lang=params.get('lang')==='en'?'en':'ar', route=['business','channel','anime'].includes(params.get('route'))?params.get('route'):'business';
+  let selectionConfirmed=false;
   let selected={business:'stores',channel:'complete',anime:'pilot'}, specific=null, activeWork=null, lastTrigger=null, workFilter='featured', skipFilmReturnFocus=false;
   const pick=v=>v[lang==='ar'?0:1], tx=(ar,en)=>lang==='ar'?ar:en;
   const data=window.PORTFOLIO_DATA;
@@ -37,7 +38,13 @@
   function safeEl(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text)e.textContent=text;return e;}
   function current(){return choices[route].items.find(x=>x.id===selected[route]);}
   function updateLinks(){document.querySelectorAll('[data-local-link]').forEach(a=>{const u=new URL(a.getAttribute('href'),location.href);if(lang==='en')u.searchParams.set('lang','en');else u.searchParams.delete('lang');a.href=u.pathname+u.search+u.hash;});}
-  function renderSelection(){const row=current();$('brief-selection').textContent=specific?tx('الخدمة المختارة: ','Selected service: ')+pick(specific):tx('المسار المختار: ','Selected path: ')+pick(choices[route].title)+' · '+pick(row.name);}
+  function renderBriefContext(){
+    const intent=$('intent').value;
+    const label=intent==='hiring'?tx('حدّثني عن الدور أو فرصة التعاون','Tell me about the role or collaboration'):intent==='cv'?tx('الجهة والغرض من طلب السيرة','Organisation and reason for requesting my CV'):tx('ماذا تريد أن نصنع أو نحقق معًا؟','What would you like us to create or work on?');
+    const hint=intent==='hiring'?tx('اذكر الجهة، والدور أو نوع التعاون، وطبيعة العمل أو موعد البداية إن كان محددًا.','Include the organisation, role or type of collaboration, and the working arrangement or start date if known.'):intent==='cv'?tx('عرّف بالجهة والفرصة المقصودة ليكون طلب السيرة واضحًا.','Include the organisation and the opportunity you have in mind.'):tx('مثال: منتجك أو موضوعك، جمهورك، وما الذي تريد منهم فعله. اذكر الموعد إن كان محددًا.','For example: your product or topic, the audience and the action you want them to take. Include a deadline if you have one.');
+    $('brief-field-label').textContent=label;$('brief-hint').textContent=hint;
+  }
+  function renderSelection(){renderBriefContext();const row=current();$('brief-selection').hidden=$('intent').value!=='project'||(!specific&&!selectionConfirmed);$('brief-selection').textContent=(!specific&&!selectionConfirmed)?'':specific?tx('الخدمة المختارة: ','Selected service: ')+pick(specific):tx('المسار المختار: ','Selected path: ')+pick(choices[route].title)+' · '+pick(row.name);}
   function renderService(){const section=choices[route],row=current();document.querySelectorAll('[data-route]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.route===route)));$('choice-label').textContent=pick(section.label);const selector=$('service-choice');selector.replaceChildren(...section.items.map(i=>{const o=new Option(pick(i.name),i.id);o.selected=i.id===row.id;return o;}));$('service-title').textContent=pick(row.title);$('service-description').textContent=pick(row.description);$('service-example').textContent=pick(row.exampleText);$('scope-label').textContent=tx('ما الذي يمكن أن يشمله مشروعك؟','What can your project include?');$('service-deliverables').replaceChildren(...row.output.map(t=>safeEl('li','',pick(t))));$('service-note').textContent=pick(scopeNote);$('route-cta').textContent=tx('لنتحدث عن هذا المشروع','Let’s discuss this project');renderSelection();}
   function youtubeId(w){return typeof w.youtubeId==='string'&&/^[a-zA-Z0-9_-]{11}$/.test(w.youtubeId)?w.youtubeId:'';}
   function playable(w){return Boolean(w.video||w.audio||youtubeId(w));}
@@ -81,7 +88,7 @@
       $(id)?.replaceChildren(...ids.map(key=>worksById.get(key)).filter(Boolean).map(w=>workCard(w,collection)));
     });
   }
-  function renderLanguage(){document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.title=tx('سلمان الحسيني × ORAKTION | أفكار وأفلام وعوالم إبداعية','Salman Al Husseini × ORAKTION | Creative direction & storytelling');document.querySelectorAll('[data-ar][data-en]').forEach(e=>e.innerHTML=e.dataset[lang]);$('language').textContent=lang==='ar'?'EN':'ع';$('language').setAttribute('aria-label',tx('Switch to English','التبديل إلى العربية'));renderService();renderWorks();renderSamples();updateLinks();if(activeWork)renderFilm();}
+  function renderLanguage(){document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.title=tx('سلمان الحسيني | السيرة المهنية ومعرض الأعمال — ORAKTION','Salman Al Husseini | Professional Profile & Portfolio — ORAKTION');document.querySelectorAll('[data-ar][data-en]').forEach(e=>e.innerHTML=e.dataset[lang]);$('language').textContent=lang==='ar'?'EN':'ع';$('language').setAttribute('aria-label',tx('Switch to English','التبديل إلى العربية'));renderService();renderWorks();renderSamples();updateLinks();if(activeWork)renderFilm();}
   function persist(){const u=new URL(location.href);if(lang==='en')u.searchParams.set('lang','en');else u.searchParams.delete('lang');u.searchParams.set('route',route);history.replaceState(null,'',u.pathname+u.search+u.hash);}
   function clearFilmMedia(){
     const media=$('film-media');
@@ -138,22 +145,23 @@
     const trigger=lastTrigger?.isConnected?lastTrigger:Array.from(document.querySelectorAll('[data-work]')).find(b=>b.dataset.work===closedWork);
     if(!skipFilmReturnFocus)trigger?.focus({preventScroll:true});lastTrigger=null;skipFilmReturnFocus=false;
   }
-  function startIntent(intent){$('intent').value=intent;$('brief-selection').hidden=intent!=='project';if(intent==='cv'&&!$('project-idea').value)$('project-idea').value=tx('أرغب في الاطلاع على سيرتك الذاتية. الجهة والغرض من الطلب: ','I would like to request your CV. Organisation and reason for the request: ');}
+  function startIntent(intent){$('intent').value=intent;renderSelection();if(intent==='cv'&&!$('project-idea').value)$('project-idea').value=tx('أرغب في الاطلاع على سيرتك الذاتية. الجهة والغرض من الطلب: ','I would like to request your CV. Organisation and reason for the request: ');}
   function legacyRoute(){const hash=location.hash.slice(1);if(hash==='showcase'){location.replace('work.html'+(lang==='en'?'?lang=en':'')+'#'+hash);return true;}if(hash==='stories'){workFilter='stories';renderWorks();}return false;}
-  document.querySelectorAll('[data-route]').forEach(b=>b.addEventListener('click',()=>{route=b.dataset.route;specific=null;renderService();persist();}));
-  $('service-choice').addEventListener('change',e=>{selected[route]=e.target.value;specific=null;renderService();});
+  document.querySelectorAll('[data-route]').forEach(b=>b.addEventListener('click',()=>{route=b.dataset.route;specific=null;selectionConfirmed=false;renderService();persist();}));
+  $('service-choice').addEventListener('change',e=>{selected[route]=e.target.value;specific=null;selectionConfirmed=false;renderService();});
   $('service-example').addEventListener('click',e=>{e.preventDefault();openWork(current().example,e.currentTarget);});
   document.querySelectorAll('[data-work]').forEach(b=>b.addEventListener('click',()=>openWork(b.dataset.work,b)));
   document.querySelectorAll('[data-work-filter]').forEach(b=>b.addEventListener('click',()=>{if(!['featured','ads','stories'].includes(b.dataset.workFilter))return;workFilter=b.dataset.workFilter;renderWorks();}));
   $('language').addEventListener('click',()=>{lang=lang==='ar'?'en':'ar';renderLanguage();persist();});
   document.querySelectorAll('[data-specific-ar]').forEach(b=>b.addEventListener('click',()=>{specific=[b.dataset.specificAr,b.dataset.specificEn];startIntent('project');renderSelection();$('project-idea').value=tx('أحتاج إلى ','I need ')+pick(specific);$('brief').scrollIntoView();$('project-idea').focus({preventScroll:true});}));
   document.querySelectorAll('[data-intent]').forEach(a=>a.addEventListener('click',()=>startIntent(a.dataset.intent)));
-  $('route-cta').addEventListener('click',()=>{specific=null;startIntent('project');renderSelection();});
+  $('route-cta').addEventListener('click',()=>{specific=null;selectionConfirmed=true;startIntent('project');renderSelection();});
+  document.querySelectorAll('[data-general-project]').forEach(a=>a.addEventListener('click',()=>{specific=null;selectionConfirmed=false;renderSelection();}));
   $('intent').addEventListener('change',()=>startIntent($('intent').value));
   $('close-film').addEventListener('click',()=>$('film-dialog').close());$('film-dialog').addEventListener('close',clearFilm);
   $('film-dialog').addEventListener('click',e=>{if(e.target!==$('film-dialog'))return;const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();});
   $('film-project').addEventListener('click',()=>{const w=worksById.get(activeWork);if(!w)return;$('project-idea').value=tx('أرغب في مشروع بأسلوب ','I would like a project in the style of ')+w[lang];specific=['عمل بأسلوب '+w.ar,'A project in the style of '+w.en];startIntent('project');renderSelection();skipFilmReturnFocus=true;$('film-dialog').close();$('brief').scrollIntoView();$('project-idea').focus({preventScroll:true});});
-  $('quick-brief').addEventListener('submit',e=>{e.preventDefault();if(!$('quick-brief').reportValidity())return;const name=$('client-name').value.trim(),idea=$('project-idea').value.trim();if(!name||!idea){$('form-status').textContent=tx('يرجى إدخال الاسم ووصف قصير.','Please enter your name and a short description.');return;}const reason=$('intent').selectedOptions[0].textContent;const selectedText=$('intent').value==='project'?'\n'+$('brief-selection').textContent:'';const message=tx('مرحبًا سلمان، أنا ','Hello Salman, I’m ')+name+'\n'+reason+selectedText+'\n\n'+idea;const url='https://wa.me/96569975288?text='+encodeURIComponent(message);$('whatsapp-fallback').href=url;$('whatsapp-fallback').hidden=false;$('form-status').textContent=tx('رسالتك جاهزة للمراجعة والإرسال في واتساب.','Your message is ready to review and send in WhatsApp.');window.open(url,'_blank','noopener,noreferrer');});
+  $('quick-brief').addEventListener('submit',e=>{e.preventDefault();if(!$('quick-brief').reportValidity())return;const name=$('client-name').value.trim(),idea=$('project-idea').value.trim();if(!name||!idea){$('form-status').textContent=tx('يرجى إدخال الاسم ووصف قصير.','Please enter your name and a short description.');return;}const reason=$('intent').selectedOptions[0].textContent;const selectedText=$('intent').value==='project'&&(specific||selectionConfirmed)?'\n'+$('brief-selection').textContent:'';const message=tx('مرحبًا سلمان، أنا ','Hello Salman, I’m ')+name+'\n'+reason+selectedText+'\n\n'+idea;const url='https://wa.me/96569975288?text='+encodeURIComponent(message);$('whatsapp-fallback').href=url;$('whatsapp-fallback').hidden=false;$('form-status').textContent=tx('رسالتك جاهزة للمراجعة والإرسال في واتساب.','Your message is ready to review and send in WhatsApp.');window.open(url,'_blank','noopener,noreferrer');});
   window.addEventListener('hashchange',legacyRoute);
   if(!legacyRoute())renderLanguage();
 })();
