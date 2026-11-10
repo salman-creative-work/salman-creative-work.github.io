@@ -327,8 +327,8 @@ function render(){
  document.getElementById('mb-w').href=waLink(g);document.getElementById('wa-direct').href=waLink(g);
  document.title=T('ORAKTION | أوراكشن — إعلانات سينمائية ومحتوى بالذكاء الاصطناعي','ORAKTION — Cinematic AI ads & content');
 }
-function setLang(l){document.documentElement.lang=l;document.documentElement.dir=l==='en'?'ltr':'rtl';try{localStorage.setItem('ork-lang',l)}catch(e){}render();}
-document.getElementById('lang').addEventListener('click',()=>setLang(isEn()?'ar':'en'));
+function setLang(l,save){document.documentElement.lang=l;document.documentElement.dir=l==='en'?'ltr':'rtl';if(save){try{localStorage.setItem('ork-lang-v2',l)}catch(e){}}render();}
+document.getElementById('lang').addEventListener('click',()=>setLang(isEn()?'ar':'en',true));
 document.querySelector('.filters').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;document.querySelectorAll('.filters button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));const f=b.dataset.f;document.querySelectorAll('.work').forEach(w=>w.hidden=f!=='all'&&w.dataset.t!==f);});
 const modal=document.getElementById('modal'),mv=document.getElementById('mv');
 const close=()=>{modal.classList.remove('open');mv.pause();mv.removeAttribute('src');mv.load();};
@@ -341,7 +341,7 @@ document.querySelectorAll('.nav a').forEach(a=>a.addEventListener('click',()=>{t
 document.addEventListener('click',e=>{if(!top.contains(e.target)){top.classList.remove('open');menu.textContent='☰';}});
 document.getElementById('brief').addEventListener('submit',e=>{e.preventDefault();const s=document.getElementById('svc').value,m=document.getElementById('msg').value.trim();window.open(waLink(T('مرحبًا أوراكشن ✦\nالخدمة: ','Hi ORAKTION ✦\nService: ')+s+'\n'+T('التفاصيل: ','Details: ')+(m||'—')),'_blank','noopener');});
 let saved='ar';
-try{saved=localStorage.getItem('ork-lang')||'ar'}catch(e){saved='ar'}
+try{saved=localStorage.getItem('ork-lang-v2')||'ar'}catch(e){saved='ar'}
 setLang(saved);
 const jump=()=>{if(location.hash.length>1){const t=document.getElementById(location.hash.slice(1));if(t)t.scrollIntoView();}};
 requestAnimationFrame(jump);window.addEventListener('load',jump);
