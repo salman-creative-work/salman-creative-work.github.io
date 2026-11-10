@@ -35,3 +35,5 @@
   new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   render();
 })();
+
+document.addEventListener('click',e=>{const a=e.target.closest('a[data-wa-ar]');if(!a)return;const t=document.documentElement.lang==='en'?a.dataset.waEn:a.dataset.waAr;a.href='https://wa.me/96569975288?text='+encodeURIComponent(t);});
