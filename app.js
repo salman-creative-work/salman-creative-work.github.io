@@ -79,7 +79,7 @@ document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click'
 function setLanguage(){
  document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
  document.querySelectorAll('.cv-request').forEach(a=>{a.href='https://wa.me/96569975288?text='+encodeURIComponent(tx('مرحبًا سلمان، أرغب في طلب سيرتك الذاتية.\nالجهة والغرض من الطلب: \nاللغة المفضلة: ','Hi Salman, I would like to request your CV.\nOrganisation and purpose: \nPreferred language: '))});
- document.title='Salman Al Husseini | AI Creative Director & Multimedia Creator';document.querySelectorAll('[data-ar]').forEach(n=>{n.innerHTML=n.dataset[lang]});
+ document.title='Salman Ghazi Al Husseini | AI Creative Director & Multimedia Creator';document.querySelectorAll('[data-ar]').forEach(n=>{n.innerHTML=n.dataset[lang]});
  const b=document.getElementById('language');b.textContent=tx('EN','عربي');b.setAttribute('aria-label',tx('Switch to English','التبديل إلى العربية'));
  document.querySelectorAll('[data-vision-link]').forEach(a=>{a.href='vision/'+(lang==='en'?'?lang=en':'')});
  renderCinema();renderSupporting();if(window.renderCollaboratorLanguage)window.renderCollaboratorLanguage();if(window.renderService)window.renderService();if(window.renderBriefLanguage)window.renderBriefLanguage();if(workDialog.open)renderWork();

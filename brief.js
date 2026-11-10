@@ -313,7 +313,7 @@
     const list=node('ul','brief-scope');scope().forEach(item=>list.append(node('li','',text(item))));card.append(list);
     if(state.channels.length)card.append(node('p','brief-card-delivery',selectedText('channels')));
     card.append(node('p','brief-card-note',t('تُراجع التفاصيل والتكلفة والموعد مع سلمان قبل الاتفاق.','Details, cost and timing are reviewed with Salman before agreement.')));
-    const sign=node('div','brief-signature');sign.append(node('strong','','SALMAN AL HUSSEINI'),node('span','','AI Creative Director & Multimedia Creator'));card.append(sign);
+    const sign=node('div','brief-signature');sign.append(node('strong','','SALMAN GHAZI AL HUSSEINI'),node('span','','AI Creative Director & Multimedia Creator'));card.append(sign);
     const returnButton=node('button','brief-card-return',t('العودة إلى اختياراتك ↑','Back to your choices ↑'));returnButton.type='button';returnButton.addEventListener('click',focusStep);card.append(returnButton);
     const live=document.getElementById('brief-live');if(live)live.textContent=t('تم تحديث تصور المشروع.','Project concept updated.');
   }
