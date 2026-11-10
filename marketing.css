@@ -46,3 +46,57 @@
 .idea{padding:18px;border-radius:10px;background:rgba(255,255,255,.035);border:1px solid #33253f;display:flex;flex-direction:column;gap:8px}.idea h3{margin:0;font-size:16px;color:#fff}.idea p{margin:0;font-size:13.5px;line-height:1.75;color:#cfc2dd;flex:1}.idea-cta{align-self:flex-start;padding:6px 10px;font-size:13px}
 .pk-note{margin-top:22px;font-size:13px;line-height:1.8;color:#a99bb8;max-width:860px}
 @media(max-width:900px){.pk-grid,.idea-grid{grid-template-columns:1fr}.pk-price b{font-size:30px}}
+
+/* ===== Mobile comfort (≤720px) ===== */
+.m-menu-btn,.m-bar,.swipe-hint{display:none}
+@media(max-width:720px){
+ html{scroll-padding-top:64px}
+ body{padding-bottom:76px}
+ .site-nav .nav-inner{min-height:60px;flex-wrap:nowrap;gap:10px;padding-top:8px;padding-bottom:8px}
+ .site-nav .brand small{display:none}
+ .site-nav .brand img{width:34px;height:34px}
+ .site-nav .nav-links{display:none;position:absolute;inset-inline:12px;top:62px;z-index:40;flex-direction:column;align-items:stretch;gap:2px;padding:8px;background:#140e1ff7;border:1px solid #3d2b4c;border-radius:12px;box-shadow:0 18px 40px #0009;backdrop-filter:blur(14px)}
+ .site-nav.menu-open .nav-links{display:flex}
+ .site-nav .nav-links a{min-height:46px;display:flex;align-items:center;gap:8px;padding:0 14px;border-radius:8px;font-size:15px}
+ .site-nav .nav-links a:active{background:#ffffff12}
+ .site-nav{position:relative}
+ .m-menu-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin-inline-start:auto;border:1px solid #ffffff2e;border-radius:50%;background:transparent;color:#fff;font-size:20px;cursor:pointer}
+ .site-nav .language{width:44px;height:44px}
+ /* hero */
+ .hero{padding-top:22px}
+ .hero h1{font-size:clamp(46px,14vw,60px)}
+ .hero .lead{font-size:15.5px;line-height:1.85}
+ .hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+ .hero-actions .button{min-height:50px;font-size:14px;justify-content:center;text-align:center;padding-inline:10px}
+ .hero-actions .create-btn{grid-column:1/-1;order:-1;font-size:16px}
+ .career-shortcuts{display:flex;flex-wrap:wrap;gap:8px}
+ .career-shortcuts a{min-height:40px;display:inline-flex;align-items:center;padding:0 12px;border:1px solid #ffffff1f;border-radius:20px}
+ /* sticky chapter bar: one swipeable row */
+ .chapter-inner{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+ .chapter-inner::-webkit-scrollbar{display:none}
+ .chapter-inner a{flex:0 0 auto;min-height:44px;display:inline-flex;align-items:center}
+ /* tighter sections */
+ .section{padding-top:56px;padding-bottom:56px}
+ .section-head h2{font-size:clamp(30px,9vw,40px)}
+ /* swipe carousels */
+ .pk-grid,.idea-grid{display:flex!important;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin-inline:-20px;padding:4px 20px 10px;scroll-padding-inline:20px}
+ .pk-grid::-webkit-scrollbar,.idea-grid::-webkit-scrollbar{display:none}
+ .pk-grid>*{flex:0 0 84%;scroll-snap-align:start}
+ .idea-grid>*{flex:0 0 78%;scroll-snap-align:start}
+ .swipe-hint{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0 4px;font-size:13px;color:#a99bb8}
+ .swipe-dots{display:flex;gap:6px}
+ .swipe-dots i{width:7px;height:7px;border-radius:50%;background:#ffffff2e;transition:.2s}
+ .swipe-dots i.on{width:20px;border-radius:4px;background:var(--cyan)}
+ .pk-cta,.idea-cta{min-height:46px;display:flex;align-items:center;justify-content:center}
+ .idea-cta{align-self:stretch}
+ /* readability & touch */
+ small,.eyebrow,.hero-caption,.ai-stack-label{font-size:max(12.5px,1em)}
+ .text-link{display:inline-flex;min-height:40px;align-items:center}
+ /* bottom action bar */
+ .m-bar{display:grid;grid-template-columns:auto 1fr;gap:8px;position:fixed;inset-inline:0;bottom:0;z-index:50;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#0d0913f2;border-top:1px solid #3d2b4c;backdrop-filter:blur(14px);transform:translateY(110%);transition:transform .25s ease}
+ .m-bar.show{transform:none}
+ .m-bar a{min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none}
+ .m-bar .m-wa{padding:0 16px;border:1px solid #2fbf71;color:#5fe39a}
+ .m-bar .m-create{background:linear-gradient(135deg,#7e41b4,#2a8f8c);color:#fff}
+}
+@media(max-width:720px) and (prefers-reduced-motion:reduce){.m-bar{transition:none}}

@@ -37,3 +37,50 @@
 })();
 
 document.addEventListener('click',e=>{const a=e.target.closest('a[data-wa-ar]');if(!a)return;const t=document.documentElement.lang==='en'?a.dataset.waEn:a.dataset.waAr;a.href='https://wa.me/96569975288?text='+encodeURIComponent(t);});
+
+/* ===== Mobile comfort ===== */
+(function(){
+  const isEn=()=>document.documentElement.lang==='en';
+  const T=(ar,en)=>isEn()?en:ar;
+  const nav=document.querySelector('.site-nav'), inner=nav&&nav.querySelector('.nav-inner'), lang=document.getElementById('language');
+  let btn;
+  if(inner&&lang){
+    btn=document.createElement('button');btn.type='button';btn.className='m-menu-btn';btn.setAttribute('aria-expanded','false');btn.innerHTML='☰';
+    inner.insertBefore(btn,lang);
+    const close=()=>{nav.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');btn.innerHTML='☰';};
+    btn.addEventListener('click',e=>{e.stopPropagation();const o=nav.classList.toggle('menu-open');btn.setAttribute('aria-expanded',String(o));btn.innerHTML=o?'✕':'☰';});
+    nav.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',close));
+    document.addEventListener('click',e=>{if(!nav.contains(e.target))close();});
+  }
+  // swipe hints + dots
+  const tracks=[...document.querySelectorAll('.pk-grid,.idea-grid')];
+  const hints=tracks.map(tr=>{
+    const h=document.createElement('div');h.className='swipe-hint';h.setAttribute('aria-hidden','true');
+    const t=document.createElement('span');const d=document.createElement('span');d.className='swipe-dots';
+    [...tr.children].forEach(()=>d.appendChild(document.createElement('i')));
+    h.append(t,d);tr.parentNode.insertBefore(h,tr);
+    const upd=()=>{const items=[...tr.children];const x=tr.getBoundingClientRect();let best=0,bd=1e9;
+      items.forEach((c,i)=>{const r=c.getBoundingClientRect();const dd=Math.abs((isEn()?r.left-x.left:x.right-r.right));if(dd<bd){bd=dd;best=i}});
+      [...d.children].forEach((dot,i)=>dot.classList.toggle('on',i===best));};
+    tr.addEventListener('scroll',()=>requestAnimationFrame(upd),{passive:true});upd();
+    return t;
+  });
+  // bottom bar
+  const bar=document.createElement('div');bar.className='m-bar';
+  bar.innerHTML='<a class="m-wa" href="https://wa.me/96569975288" target="_blank" rel="noopener"></a><a class="m-create" href="#create"></a>';
+  document.body.appendChild(bar);
+  const wa=bar.querySelector('.m-wa'), cr=bar.querySelector('.m-create');
+  const paint=()=>{
+    hints.forEach(t=>t.textContent=T('اسحب لمشاهدة المزيد ←','Swipe to see more →'));
+    wa.textContent=T('واتساب','WhatsApp');cr.textContent=T('دعني أصنع محتواك ✦','Let me create your content ✦');
+    wa.href='https://wa.me/96569975288?text='+encodeURIComponent(T('مرحبًا سلمان، وصلت إليك من موقعك وأود التحدث عن: ','Hi Salman, I found you through your website and would like to talk about: '));
+    if(btn)btn.setAttribute('aria-label',T('القائمة','Menu'));
+  };
+  paint();new MutationObserver(paint).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  const hero=document.querySelector('.hero'), brief=document.getElementById('brief'), create=document.getElementById('create');
+  const vis={hero:true,brief:false,create:false};
+  const sync=()=>{bar.classList.toggle('show',!vis.hero&&!vis.brief);cr.style.display=vis.create?'none':'';bar.style.gridTemplateColumns=vis.create?'1fr':'';};
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{vis[e.target===hero?'hero':'brief']=e.isIntersecting});sync();},{threshold:0});
+  [hero,brief].forEach(el=>el&&io.observe(el));
+  if(create)new IntersectionObserver(es=>{es.forEach(e=>{vis.create=e.isIntersecting});sync();},{rootMargin:'-45% 0px -45% 0px'}).observe(create);
+})();
